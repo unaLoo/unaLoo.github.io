@@ -1,4 +1,5 @@
 import os
+import string
 import random
 from datetime import datetime, timedelta
 import glob
@@ -18,6 +19,12 @@ def random_date(start_date, end_date):
 start_date = datetime(2025, 3, 1)
 end_date = datetime(2025, 4, 30)
 
+# Id
+def generate_six_digit_uuid():
+    characters = string.ascii_letters + string.digits  # 包含字母和数字
+    six_digit_uuid = ''.join(random.choices(characters, k=6))  # 随机选择 6 个字符
+    return six_digit_uuid
+
 
 for file_path in file_paths:
     with open(file_path, "r", encoding="utf-8") as file:
@@ -29,12 +36,15 @@ for file_path in file_paths:
     date_obj = random_date(start_date, end_date)
     date_str = date_obj.strftime("%Y-%m-%d")
 
+    # 生成随机六位 blogId
+    blogId = generate_six_digit_uuid()
+
     jekyll_prefix = f"""---
 title: "{title}"
-collection: algorithm
-type: algorithm
 date: {date_str}
-location: 中国南京
+permalink: /posts/{blogId}/
+tags:
+  - 数据结构
 ---
 """
     # 添加前缀到文件内容
