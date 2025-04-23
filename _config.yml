@@ -226,7 +226,7 @@ defaults:
     values:
       layout: talk
       author_profile: true
-      share: true
+      share: false
       # read_time: true
       # comments: true
       # related: true
@@ -238,7 +238,7 @@ defaults:
     values:
       layout: talk
       author_profile: true
-      share: true
+      share: false
 
   # _talks
   - scope:
@@ -247,7 +247,7 @@ defaults:
     values:
       layout: talk
       author_profile: true
-      share: true
+      share: false
 
 
 # Sass/SCSS
