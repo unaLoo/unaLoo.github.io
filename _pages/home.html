@@ -1,0 +1,24 @@
+---
+layout: full
+author_profile: false
+
+permalink: /
+redirect_from:
+- /home/
+- /home.html
+---
+
+{% assign author = site.author %}
+
+<div class="home-intro">
+    <img class="intro-avatar" src="{{ author.avatar | prepend: " /images/" | prepend: base_path }}"
+        alt="{{ author.name }}">
+    <h1>Hi there, it‘s Loop</h1>
+    <p>欢迎访问我的个人主页 👋</p>
+    <ul>
+        <li><a href="/posts/">📰 实用Web技术博客</a></li>
+        <li><a href="/algorithm/">👨‍💻 算法和数据结构</a></li>
+        <li><a href="/random/">🪶 whatever, 随想 | 随记</a></li>
+        <li><a href="/cv/">🏄‍♂️ 生命历程</a></li>
+    </ul>
+</div>

@@ -8,20 +8,20 @@ $dark-gray                  : mix(#000, $gray, 40%);
 $darker-gray                : mix(#000, $gray, 60%);
 $light-gray                 : mix(#fff, $gray, 50%);
 
-$background                 : #474747;
-$background-light           : mix(#fff, $background, 80%);
-$background-lighter         : mix(#fff, $background, 90%);
-$text                       : #ffffff;
-$link                       : #0ea1c5;
-$link-dark                  : mix(#000, $link, 25%);
-$link-light                 : mix(#fff, $link, 25%);
+$background                 : #121620; /* Deeper, more sophisticated dark blue */
+$background-light           : #2a3142; /* Complementary dark blue-gray */
+$background-lighter         : #3a4255; /* Lighter variant for subtle contrasts */
+$text                       : #e6e9f0; /* Slightly blue-tinted white for better readability */
+$link                       : #64b5f6; /* More vibrant blue that stands out on dark background */
+$link-dark                  : #4a86c5; /* Darker blue for hover states */
+$link-light                 : #8fcbff; /* Lighter blue for visited states */
 
 /* Color codes used for the site */
-$danger-color               : #ee5f5b;
-$info-color                 : #2f7f93;
-$notice-color               : #7a8288;
-$success-color              : #62c462;
-$warning-color              : #f89406;
+$danger-color               : #ef5350; /* Refined red */
+$info-color                 : #42a5f5; /* Cohesive blue */
+$notice-color               : #78909c; /* Blue-gray that fits the theme */
+$success-color              : #66bb6a; /* Refined green */
+$warning-color              : #ffb74d; /* Warm amber */
 
 /* Other basic settings for the template */
 $border-radius              : 4px;
@@ -37,17 +37,17 @@ $sidebar-screen-min-width   : 1024px;
 html[data-theme="dark"] {
     --global-base-color                 : #{$background};
     --global-bg-color                   : #{$background};
-    --global-footer-bg-color            : #{$background};
-    --global-border-color               : #{$light-gray};
-    --global-dark-border-color          : #{$background-light};
-    --global-code-background-color      : #fafafa;
-    --global-code-text-color            : #{$darker-gray};
+    --global-footer-bg-color            : #{$background-light};
+    --global-border-color               : #{$background-lighter};
+    --global-dark-border-color          : #{$background-lighter};
+    --global-code-background-color      : #{$background-light};
+    --global-code-text-color            : #{$text};
     --global-fig-caption-color          : #{$light-gray};
     --global-link-color                 : #{$link};
-    --global-link-color-hover           : #{$link-dark};
-    --global-link-color-visited         : #{$link-light};
+    --global-link-color-hover           : #{$link-light};
+    --global-link-color-visited         : #{$link-dark};
     --global-masthead-link-color        : #{$text};
-    --global-masthead-link-color-hover  : #{$background-light};
+    --global-masthead-link-color-hover  : #{$link};
     --global-text-color                 : #{$text};
     --global-text-color-light           : #{$light-gray};
     --global-thead-color                : #{$background-lighter};

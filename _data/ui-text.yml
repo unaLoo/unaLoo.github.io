@@ -291,7 +291,7 @@ zh: &DEFAULT_ZH
   feed_label                 : "打赏"
   powered_by                 : "技术支持："
   website_label              : "网站"
-  email_label                : "电子邮件"
+  email_label                : "Email"
   recent_posts               : "最新文章"
   undefined_wpm              : "_config.yml中未定义words_per_minute参数"
   comment_form_info          : "您的电子邮件地址不会被公开。（必填项已标注）"
