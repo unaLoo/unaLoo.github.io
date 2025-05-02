@@ -25,7 +25,7 @@ author:
   avatar           : "profile.jpg"
   name             : "Loop"
   # pronouns         : "he/him" # example: "she/her"  
-  bio              : " Man | WebDeveloper | GISer"
+  bio              : "Man | WebDeveloper | GISer"
   location         : "中国"
   employer         : "南京师范大学"
   email            : "huanyu.lu@foxmail.com" 
@@ -188,7 +188,7 @@ markdown_ext: "markdown,mkdown,mkdn,mkd,md"
 markdown: kramdown
 highlighter: rouge
 lsi: false
-excerpt_separator: "===="
+excerpt_separator: "----"
 incremental: false
 
 
