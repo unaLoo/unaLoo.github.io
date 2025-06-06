@@ -1,6 +1,6 @@
 ---
 title: 'JavaScript Object'
-date: 2025-06-02
+date: 2025-06-05
 permalink: /posts/jsobj2/
 tags:
   - JavaScript
@@ -39,6 +39,7 @@ tags:
     value: 'static',
   });
 
+  let bValue = '';
   Object.defineProperty(o, 'b', {
     get() {
       return bValue;
@@ -233,12 +234,35 @@ console.log(returnedTarget === target); // true, 引用相同
 
 - 提供**统一**、语义清晰的接口
 - 返回布尔值或结果，**不抛异常**
-- 与 `Proxy` handler 中的陷阱（trap）方法一一对应
+- 与 `Proxy` handler 中的陷阱（trap）方法一一对应 
+  - 它们共同提供了一种统一、标准、可拦截 的操作对象行为的方式；
+  - Reflect 提供了默认行为；
+  - Proxy 可以在 Reflect 的基础上进行拦截和自定义；
+  - 两者配合使用可以更清晰地控制对象的行为。
+
+---
+
+核心方法： 基本和Object的方法一一对应， 但返回布尔值或结果， 不抛异常
+
+- `Reflect.has(obj, prop)` --- 判断对象是否具有某个属性
+- `Reflect.get(obj, prop)` --- 获取对象的属性值
+- `Reflect.set(obj, prop, value)` --- 设置对象的属性值
+- `Reflect.defineProperty(obj, prop, descriptor)` --- 定义对象的属性
+- `Reflect.deleteProperty(obj, prop)` --- 删除对象的属性
+- `Reflect.getOwnPropertyDescriptor(obj, prop)` --- 获取对象的属性描述符
+- `Reflect.getPrototypeOf(obj)` --- 获取对象的原型
+- `Reflect.setPrototypeOf(obj, proto)` --- 设置对象的原型
+- `Reflect.ownKeys(obj)` --- 获取对象的自身属性
+
 
 #### 示例：用 Reflect 替代传统方法
 
 ```js
 const obj = { name: 'Alice' };
+
+// 等价于：'name' in obj
+console.log(Reflect.has(obj, 'name')); // true
+console.log(Reflect.has(obj, 'age'));  // false
 
 // 等价于 obj.name
 Reflect.get(obj, 'name'); // "Alice"
@@ -246,11 +270,23 @@ Reflect.get(obj, 'name'); // "Alice"
 // 设置属性
 Reflect.set(obj, 'age', 25);
 
+// 删除属性
+const obj = { name: 'Alice', age: 20 }
+Reflect.deleteProperty(obj, 'age');
+console.log(obj); // { name: 'Alice' }
+
 // 定义属性（等价于 Object.defineProperty）
 Reflect.defineProperty(obj, 'gender', {
   value: 'female',
   writable: false,
 });
+
+// 获取对象的所有属性，包括不可枚举的属性和 Symbol 属性
+const obj = { foo: 1 };
+obj[Symbol('bar')] = 2;
+
+console.log(Reflect.ownKeys(obj));  // 输出：[ 'foo', Symbol(bar) ]
+
 ```
 
 **好处：**
@@ -328,7 +364,7 @@ Proxy 通常配合 Reflect 使用。**Reflect 保证语义一致性和原始行�
 
   - 是你要赋给属性的新值。
 
-- 4. `receiver`：调用者，即 Proxy 本身或继承者
+- `receiver`：调用者，即 Proxy 本身或继承者
 
   - 是这次操作的**上下文对象**，通常是 `proxy` 本身，但在继承或 `super` 场景中尤为重要。
 
