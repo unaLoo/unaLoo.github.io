@@ -2,15 +2,15 @@
   "basics": {
     "name": "huanyuLoo",
     "email": "huanyu.lu@foxmail.com",
-    "phone": "182****2382",
+    "phone": "182******82",
     "website": "https://unaloo.github.io",
-    "summary": "南师大地科院研二在读, 地图学与地理信息系统专业, 专注于Web前端开发, 地理可视化，多次参与课题组横向项目开发和部署运维。",
+    "summary": "研二在读, GIS专业, 写写前端，做做地图可视化，always参与各种ToG横向项目开发。",
     "location": {
-      "address": "南京师范大学地理科学学院",
-      "postalCode": "210000",
-      "city": "南京，中国",
+      "address": "Earth, China",
+      "postalCode": "",
+      "city": "Earth",
       "countryCode": "CN",
-      "region": "栖霞区"
+      "region": ""
     },
     "profiles": [
       {
@@ -24,7 +24,7 @@
   "education": [
     {
       "institution": "武汉理工大学",
-      "area": "学士 | 地理信息科学",
+      "area": "学士 | GIS",
       "studyType": "",
       "startDate": "2019",
       "endDate": "2023",
@@ -33,7 +33,7 @@
     },
     {
       "institution": "南京师范大学",
-      "area": "硕士 | 地图学与地理信息系统",
+      "area": "硕士 | GIS",
       "studyType": "",
       "startDate": "2023",
       "endDate": "2026",
@@ -41,20 +41,58 @@
       "courses": []
     }
   ],
-  "skills": [],
-  "languages": [],
-  "interests": [],
-  "references": [],
-  "publications": [],
-  "presentations": [],
-  "teaching": [],
+  "skills": [
+    {
+      "name": "Frontend Dev",
+      "level": "Proficient",
+      "keywords": ["HTML5", "CSS3", "JavaScript", "Vue"]
+    },
+    {
+      "name": "Backend Dev",  
+      "level": "Intermediate",
+      "keywords": ["Express", "Flask", "PostgreSQL", "Minio", "Docker", "Linux"]
+    },
+    {
+      "name": "Geo-Visualization Dev",
+      "level": "Proficient",
+      "keywords": ["WebGL", "Mapbox GL", "Three.js", "Cesium"]
+    },
+    {
+      "name": "GeoData Processing and Analysis",
+      "level": "Intermediate",
+      "keywords": ["GDAL", "QGIS", "Rasterio", "numpy"]
+    }
+  ],
   "portfolio": [
     {
-      "name": "project1",
+      "name": "**野外水沙监测平台",
       "category": "portfolio",
-      "date": "",
-      "url": "",
-      "description": "This is a crazy project<br/><img src='/images/500x300.png'>"
+      "date": "2023-08 to 2023-10",
+      "description": "这是我进组参加的第一个项目，回头翻用户手册，当年小M哥真是写了蛮多功能的，工作量巨大，并且自己一个人前后端梭哈，敬佩且想念之!<br/>后来我跟Y哥、H哥又继续添加了风暴潮模块，加了一些有关台风路径和风暴潮可视化的功能，现在回看当时写的代码真是太呆了，哈哈哈。<br/><img src='/images/project/shuishajiance.png'>"
+    },
+    {
+      "name": "**实时监测预警系统",
+      "category": "portfolio",
+      "date": "2024-01 to 2024-12",
+      "description": "从一开始招投标之前写得Demo系统，到拿到项目，然后作为乙方的乙方一直在苦逼拧螺丝，和C哥，H哥，Y哥一起并肩战斗，和甲方扯皮，焦虑得疯狂通宵但效率奇低的日子真的是非常青春感人，自己也从一开始被师兄带着做到慢慢接手，带新师弟，除了技术上的提升，更是对自我认识和目标的一种渐渐明确，感谢Sensei Wine和Bro们<br/><img src='/images/project/bengan.png'>"
+    },
+    {
+      "name": "**水下地理信息查询展示系统",
+      "category": "portfolio",
+      "date": "2024-08 to 2025-02",
+      "description": "这个项目主要是负责干可视化，崩岸之后，图形相关的东西长进得最多的一段时间，前后端是两位师弟辛苦写的，两位师弟非常优秀，C哥总是前面披荆斩棘的告诉我往哪走的那个人，Respect!<br/><img src='/images/project/terrain.png'>"
+    },
+    {
+      "name": "**ARD平台",
+      "category": "portfolio",
+      "date": "2025-03 to now",
+      "description": "其实从这个项目开始，我才感觉自己从一个切图仔变成了有系统观、架构观的人，感谢好兄弟Y哥，我的老战友了也是。这个项目是个很能拿出来吹牛的项目，可惜俺要毕业，要找工作，已经狠狠披荆斩棘了，但愿师弟可以接住，把事情干好，K师弟你是最叼的！<br/><img src='/images/project/ard.png'>"
+    },
+    {
+      "name": "Open-Web-EDCIS",
+      "category": "portfolio",
+      "date": "To be continued...",
+      "description": "To be continued..."
     }
   ]
 }

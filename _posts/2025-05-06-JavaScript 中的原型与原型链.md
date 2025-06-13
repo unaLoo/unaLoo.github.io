@@ -4,7 +4,6 @@ date: 2025-05-06
 permalink: /posts/jsobj1/
 tags:
   - JavaScript
-  - 面试题
 ---
 
 > 为 JavaScript 的面向对象设计与传统类驱动语言（如 Java、C#）有着本质的不同。

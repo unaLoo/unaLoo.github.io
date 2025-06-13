@@ -4,7 +4,6 @@ date: 2025-06-05
 permalink: /posts/jsobj2/
 tags:
   - JavaScript
-  - 面试题
 ---
 
 > Object 是 JavaScript 中最重要的对象之一。ES6 之后，JavaScript 对对象的操作能力被大大增强，**Reflect API** 和 **Proxy API** 是最具代表性的特性。本文梳理了 Object 的常用方法与属性特性，并介绍了 Reflect API 和 Proxy API 的用法。
