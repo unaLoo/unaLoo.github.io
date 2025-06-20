@@ -1,5 +1,5 @@
 ---
-title: 'HTTP请求方法的区别-前端计网学习笔记(2)'
+title: 'HTTP请求方法的区别-计网(2)'
 date: 2025-06-13
 permalink: /posts/network2/
 tags:
