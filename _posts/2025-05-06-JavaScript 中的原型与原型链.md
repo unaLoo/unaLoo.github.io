@@ -249,50 +249,39 @@ console.log(x.split(' ')); // 继承自String.prototype 的 split方法
 ---
 
 
-## 三、从ES5的继承理解原型链
+## 三、原型链驱动的继承机制
 
 在ES6之前，JS 没有 class 关键字，实现继承的方式经过了几代演变，最终通过寄生组合式继承实现。
 
 ---
-以下三种继承方式，均以Parent为父类，Child为子类进行举例说明。
 
-```js
-  function Parent() {
-      this.colors = ['red', 'blue'];
-      this.type = 'parent'
-  }
-  Parent.prototype.sayHi = function () {
-      console.log('hi');
-  };
-
-```
----
-
-### 1 最早的继承方式：原型链继承
+### 1 原型链继承
 
 - 原理：让子类的原型对象指向父类的实例。这样，子类实例就能访问到父类原型上的属性和方法。
 - 优点：子类实例可以访问父类原型上的方法。
-- 缺点：所有子类实例共享父类实例属性（如数组、对象等引用类型）， 创建子类实例时，无法向父类构造函数传参
+- 缺点：**所有子类实例共享父类实例属性**（如数组、对象等引用类型）， 创建子类实例时，无法向父类构造函数传参
    
 - 说白了，子类永远持有父类的同一个实例，导致父类属性被错误共享。
 
 ---
 
 ```js
-  function Child() { 
-      this.name = 'child'
+  function Parent() {
+    this.name = 'parent';
   }
-  Child.prototype = new Parent(); // 关键
-  Child.prototype.constructor = Child;
 
-  var c1 = new Child();
-  var c2 = new Child();
-  c1.colors.push('green');
-  c1.type = 'parentA'
-  console.log(c1.colors, c1.type); // ['red', 'blue', 'green'] parentA
-  console.log(c2.colors, c2.type); // ['red', 'blue', 'green'] parent  // 问题：引用类型被错误共享
-  c1.sayHi(); // hi
+  Parent.prototype.sayName = function() {
+    console.log(this.name);
+  }
 
+  function Child() {
+    this.type = 'child';
+  }
+
+  Child.prototype = new Parent();
+
+  var child = new Child();
+  child.sayName(); // 'parent'
 ```
 
 ### 2 借用构造函数继承
@@ -301,46 +290,199 @@ console.log(x.split(' ')); // 继承自String.prototype 的 split方法
 
 - 原理：在子类构造函数中调用父类构造函数，这样每个子类实例都有自己的父类实例属性，互不干扰。
 - 优点：每个子类实例都有自己的父类属性，互不影响。可以向父类构造函数传参。
-- 缺点：父类原型上的方法无法被子类继承（如 sayHi）。每个实例都单独拷贝一份父类属性，方法无法复用。
+- 缺点：**父类原型上的方法无法被子类继承**。每个实例都单独拷贝一份父类属性，方法无法复用。
 
 ---
 
 ```js
-  function Child(){
-      Parent.call(this) // 关键
-      this.name = 'child'
-  }
-  var c1 = new Child();
-  var c2 = new Child();
-  c1.colors.push('green');
-  c1.type = 'parentA'
-  console.log(c1.colors, c1.type); // ['red', 'blue', 'green'] parentA
-  console.log(c2.colors, c2.type); // ['red', 'blue'] parent 
-  c1.sayHi(); // 属性没问题了, 但是方法没了，因为没有原型Parent.prototype
-```
-
-
-### 3 最完美的继承方式：寄生组合式继承
-
-这种继承方式结合了前两种方式的优点，既解决了引用类型被错误共享的问题，又解决了无法向父类构造函数传参的问题。
-
-原理：用构造函数继承父类属性，用原型链继承父类方法。
-优点：每个子类实例有自己的父类属性，互不影响 | 可以向父类构造函数传参 | 父类原型上的方法可以复用
-
----
-
-```js
-function Child(){
-    Parent.call(this) // 关键 1 
-    this.name = 'child'
+function Parent() {
+  this.name = 'parent';
 }
-Child.prototype = new Parent() // 关键 2
-Child.prototype.constructor = Child // 修复构造函数指向, 否则会指向Parent
-var c1 = new Child()
-var c2 = new Child()
-c1.colors.push('green');
-c1.type = 'parentA'
-console.log(c1.colors, c1.type); // ['red', 'blue', 'green'] parentA
-console.log(c2.colors, c2.type); // ['red', 'blue'] parent 
-c1.sayHi(); // hi
+Parent.prototype.sayName = function() {
+  console.log(this.name);
+}
+
+function Child() {
+  Parent.call(this);
+  this.type = 'child';
+}
+
+var child = new Child();
+console.log(child.name); // 'parent'
 ```
+
+### 3 组合继承
+
+- 原理：将原型链继承和借用构造函数继承结合起来，既可以继承父类原型上的方法，又可以避免属性共享的问题。
+- 优点：每个子类实例有自己的父类属性，互不影响 | 父类原型上的方法可以复用
+- 缺点：**父类原型上的方法被调用两次**，一次在原型链继承时，一次在借用构造函数继承时。
+
+---
+
+```js
+function Parent() {
+  this.name = 'parent';
+}
+
+Parent.prototype.sayName = function() {
+  console.log(this.name);
+}
+
+function Child() {
+  Parent.call(this);
+  this.type = 'child';
+}
+
+Child.prototype = new Parent();
+Child.prototype.constructor = Child;
+
+var child = new Child();
+child.sayName(); // 'parent'
+console.log(child.name); // 'parent'
+```
+
+### 4. 原型式继承（这不像是继承，像是直接梭哈的js对象）
+
+Douglas Crockford 提出的一种继承方式，基于一个现有对象创建新对象。
+
+- 原理：使用 `Object.create()` 方法（或者模拟实现）来创建一个新对象，并将新对象的原型指向一个已存在的对象。
+- 优点：简单灵活
+- 缺点：和原型链继承一样，引用类型共享问题
+
+```js
+function createObject(obj) {
+  function F() {}
+  F.prototype = obj;
+  return new F();
+}
+
+var parent = {
+  name: 'parent',
+  sayName: function() {
+    console.log(this.name);
+  }
+};
+
+var child = createObject(parent);
+child.name = 'child';
+child.sayName(); // 'child'
+```
+
+-----
+
+### 5. 寄生式继承（搞笑呢，属于凑数的）
+
+在原型式继承的基础上，增强对象。
+
+- 原理：创建一个函数，该函数接收一个对象作为参数，然后增强该对象，并返回该对象。
+- 优点：在原型式继承的基础上增强子对象，加个方法属性啥的，WTF这也能成为一类吗？
+- 缺点：和原型式继承一样，存在引用类型共享问题，隔靴搔痒。
+
+---
+
+```js
+function createObject(obj) {
+  function F() {}
+  F.prototype = obj;
+  return new F();
+}
+
+function createChild(parent) {
+  var child = createObject(parent);
+  child.name = 'child';
+  child.sayName = function() {
+    console.log(this.name);
+  };
+  return child;
+}
+
+var parent = {
+  name: 'parent',
+  sayName: function() {
+    console.log(this.name);
+  }
+};
+
+var child = createChild(parent);
+child.sayName(); // 'child'
+```
+
+
+-----
+
+### 6. 寄生组合式继承
+
+这是**最理想的继承方式**，使用Object.create()方法来创建**父类原型**的副本，避免了调用父类构造函数时创建不必要的实例。
+
+- 原理：创建父类原型的一个副本，并将其赋值给子类原型，避免了调用两次父类构造函数。
+- 优点：解决了所有组合继承的缺点，**引用类型共享**和**父类构造函数被调用两次**的问题。
+
+```js
+function inherit(child, parent) {
+  var prototype = Object.create(parent.prototype); // 创建父类原型的一个副本
+  prototype.constructor = child;
+  child.prototype = prototype;
+}
+
+function Parent() {
+  this.name = 'parent';
+}
+
+Parent.prototype.sayName = function() {
+  console.log(this.name);
+}
+
+function Child() {
+  Parent.call(this);// 只调用1次父类构造函数
+  this.type = 'child';
+}
+
+inherit(Child, Parent);
+
+var child = new Child();
+child.sayName(); // 'parent'
+console.log(child.name); // 'parent'
+```
+
+-----
+
+### 7. ES6 Class 继承
+
+ES6 引入了 `class` 关键字，但它**本质上仍然是基于原型链和寄生组合式继承的语法糖**。它并没有引入新的继承模型，只是让 JavaScript 的继承写法更接近传统面向对象语言。
+
+- 核心：`extends` 关键字和 `super` 关键字封装了寄生组合式继承的底层逻辑。
+```javascript
+    class Parent {
+        constructor(name) {
+            this.name = name;
+            this.hobbies = ['reading', 'coding'];
+        }
+        sayHello() {
+            console.log('Hello, I am ' + this.name);
+        }
+    }
+
+    class Child extends Parent {
+        constructor(name, age) {
+            super(name); // 相当于 Parent.call(this, name)，调用父类构造函数
+            this.age = age;
+        }
+        sayAge() {
+            console.log('My age is ' + this.age);
+        }
+    }
+```
+
+### 总结
+
+| 继承方式     | 解决引用类型共享 | 解决父类传参 | 父类方法复用 | 父类构造函数调用次数 |
+| :----------- | :--------------: | :----------: | :------: | :--------------: |
+| 原型链       |       否         |      否      |    是    |       1          | 
+| 借用构造函数 |       是         |      是      |    否    |       1          | 
+| 组合继承     |       是         |      是      |    是    |       2          | 
+| 原型式       |       否         |      否      |    否    |       0          | 
+| 寄生式       |       否         |      否      |    否    |       0          | 
+| **寄生组合式** |       **是** |      **是** |    **是**|       **1** | 
+| **ES6 Class**|       **是** |      **是** |    **是**|       **1** |  
+
+在现代 JavaScript 开发中，**ES6 的 `class` 关键字** 是实现继承的首选和标准方式，因为它在底层已经为你处理了寄生组合式继承的所有细节。理解其他继承方式有助于深入理解 JavaScript 的原型本质，并在阅读旧代码时派上用场。
