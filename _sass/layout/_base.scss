@@ -141,9 +141,9 @@ li > code,
 p > code,
 td > code {
   color: var(--global-code-text-color);
-  padding-top: 0.1rem;
-  padding-bottom: 0.1rem;
-  font-size: $type-size-6;
+  padding-top: 0.05rem;
+  padding-bottom: 0.05rem;
+  font-size: $type-size-5-5;
   background: var(--global-code-background-color);
   border: 1px solid var(--global-thead-color);
   border-radius: $border-radius;
