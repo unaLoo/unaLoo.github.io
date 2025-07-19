@@ -1,31 +1,78 @@
 import { defineConfig } from 'vitepress'
+import fs from 'fs'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  srcDir: './src',
-  cleanUrls: true,
+    // build
+    srcDir: './src',
 
-  title: "Loop`s Workshop",
-  description: "A VitePress Site",
-  themeConfig: {
-    // https://vitepress.dev/reference/default-theme-config
-    nav: [
-      { text: 'Home', link: '/' },
-      { text: 'Examples', link: '/markdown-examples' }
+    // optimize
+    cleanUrls: true,
+    ignoreDeadLinks: true,
+    markdown: {
+        image: {
+            lazyLoading: true
+        }
+    },
+
+    // meta
+    lang: 'zh-CN',
+    title: "Loop`s Site",
+    description: "Loop 的个人站点, 分享Web开发实用技术, 实践和生活",
+    head: [
+        // icon
+        ['link', { rel: "icon", href: "/favicon.ico" }],
+
+        ['meta', { property: 'og:type', content: 'website' }],
+        ['meta', { property: 'og:title', content: 'Loop 的个人站点' }],
+        ['meta', { property: 'og:description', content: '实践 | 记录 | 分享' }],
+        ['meta', { property: 'og:image', content: 'https://ruanyf-weekly.plantree.me/thumbnail.jpg' }],
+        ['meta', { property: 'og:url', content: 'https://ruanyf-weekly.plantree.me/' }],
+        // analytics
+        ['script', { async: '', src: 'https://www.googletagmanager.com/gtag/js?id=TAG_ID' }],
+        [
+            'script',
+            {},
+            `window.dataLayer = window.dataLayer || [];
+             function gtag(){dataLayer.push(arguments);}
+             gtag('js', new Date());
+             gtag('config', 'TAG_ID');`
+        ],
+        ['script', { src: '/analytic.js', defer: '', }],
     ],
 
-    sidebar: [
-      {
-        text: 'Examples',
-        items: [
-          { text: 'Markdown Examples', link: '/markdown-examples' },
-          { text: 'Runtime API Examples', link: '/api-examples' }
-        ]
-      }
-    ],
+    // theme
+    appearance: true,
+    lastUpdated: true,
+    themeConfig: {
+        nav: [
+            { text: 'Home', link: '/' },
+            { text: 'Tech', link: '/tech' },
+            { text: 'Algo', link: '/algo' },
+            { text: 'Talk', link: '/talk' },
+            { text: 'Life', link: '/life' },
+        ],
+        sidebar: sideBar(),
 
-    socialLinks: [
-      { icon: 'github', link: 'https://github.com/vuejs/vitepress' }
-    ]
-  }
+        socialLinks: [
+            { icon: 'github', link: 'https://github.com/unaLoo' },
+        ],
+        lastUpdated: {
+            text: 'Updated at',
+            formatOptions: {
+                dateStyle: 'full',
+                timeStyle: 'medium'
+            }
+        }
+    }
 })
+
+
+function sideBar() {
+    const content = fs.readFileSync('./scripts/sidebar.json', 'utf8').toString()
+    const tree = JSON.parse(content)
+
+    // 如果未来要做进一步分类，那在这基于tag做就可以
+
+    return tree
+}

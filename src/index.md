@@ -4,22 +4,31 @@ layout: home
 
 hero:
   name: "Loop`s Workshop"
-  text: "A VitePress Site"
-  tagline: My great project tagline
+  text: " 实践 | 记录 | 分享 "
+  tagline: Loop 的个人博客
+  image:
+    src: /round.png
+    alt: Loop's Social Profile
   actions:
-    - theme: brand
-      text: Markdown Examples
-      link: /markdown-examples
-    - theme: alt
-      text: API Examples
-      link: /api-examples
-
+    - theme: 'brand'
+      text: Tech 博客
+      link: /tech
+    - theme: 'brand'
+      text: Algo 记录
+      link: /algo
+    - theme: 'brand'
+      text: Talk 随记
+      link: /talk
+    - theme: 'alt'
+      text: Life 生活
+      link: /life
 features:
-  - title: Feature A
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature B
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature C
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
+  - title: 实践
+    details: 记录Web开发的基础知识、实践经验与思考。
+  - title: 记录
+    details: 把学到的、想到的都塞这里，不定期更新。
+  - title: 随记
+    details: 分享 Loop 的生活琐碎。
+
 ---
 
