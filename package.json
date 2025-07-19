@@ -5,7 +5,8 @@
     },
     "scripts": {
         "dev": "npm run prepare && vitepress dev",
-        "build": "vitepress build && vitepress preview --port 8080",
+        "build": "vitepress build",
+        "preview": "vitepress preview --port 8080",
         "fix": "node ./scripts/fixMd.js",
         "prepare": "node ./scripts/sidebar.js > ./scripts/sidebar.json"
     },
