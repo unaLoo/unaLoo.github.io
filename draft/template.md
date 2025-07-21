@@ -1,0 +1,8 @@
+---
+title: ''
+date: 2025-07-21
+tags:
+  - JavaScript
+  - ES6
+
+---
