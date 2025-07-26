@@ -5,6 +5,7 @@
     },
     "scripts": {
         "dev": "npm run prepare && vitepress dev",
+        "test": "vitepress dev",
         "build": "vitepress build",
         "preview": "vitepress preview --port 8080",
         "fix": "node ./scripts/fixMd.js",

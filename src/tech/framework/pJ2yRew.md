@@ -6,8 +6,7 @@ tags:
 
 ---
 
-> 虚拟DOM、从template到虚拟DOM、Vue2和Vue3的Diff算法、Vue Diff vs React Diff
-
+> 虚拟DOM
 
 ## 1. 虚拟DOM
 

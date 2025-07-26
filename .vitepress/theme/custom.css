@@ -1,4 +1,15 @@
 :root {
-  --vp-home-hero-name-color: transparent;
-  --vp-home-hero-name-background: -webkit-linear-gradient(120deg, #efd9ff, #47d1ff);
+    --vp-home-hero-name-color: transparent;
+    --vp-home-hero-name-background: -webkit-linear-gradient(110deg, hsl(275, 77%, 77%), hsl(195, 77%, 54%));
+    --vp-c-brand-2: hsl(195, 67%, 60%);
+    --vp-c-brand-3: hsl(195, 67%, 41%);
+
+}
+
+div.VPHomeHero>div.container>div.main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 5vh;
 }

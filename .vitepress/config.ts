@@ -17,7 +17,7 @@ export default defineConfig({
 
     // meta
     lang: 'zh-CN',
-    title: "Loop`s Site",
+    title: "Loop`s Workshop",
     description: "Loop 的个人站点, 分享Web开发实用技术, 实践和生活",
     head: [
         // icon
@@ -57,13 +57,13 @@ export default defineConfig({
         socialLinks: [
             { icon: 'github', link: 'https://github.com/unaLoo' },
         ],
-        lastUpdated: {
-            text: 'Updated at',
-            formatOptions: {
-                dateStyle: 'full',
-                timeStyle: 'medium'
-            }
-        }
+        // lastUpdated: {
+        //     text: 'Updated at',
+        //     formatOptions: {
+        //         dateStyle: 'full',
+        //         timeStyle: 'medium'
+        //     }
+        // }
     }
 })
 

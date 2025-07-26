@@ -1,5 +1,5 @@
 ---
-title: 'DNS和CDN-计网(8)'
+title: 'DNS和CDN'
 date: 2025-06-17
 tags:
   - 计算机网络

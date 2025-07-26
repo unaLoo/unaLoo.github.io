@@ -1,5 +1,5 @@
 ---
-title: 'HTTP缓存-计网(7)'
+title: 'HTTP缓存'
 date: 2025-06-17
 tags:
   - 计算机网络

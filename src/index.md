@@ -5,10 +5,10 @@ layout: home
 hero:
   name: "Loop`s Workshop"
   text: " 实践 | 记录 | 分享 "
-  tagline: Loop 的个人博客
-  image:
-    src: /round.png
-    alt: Loop's Social Profile
+#   tagline: Loop 的个人博客
+#   image:
+#     src: /round.png
+#     alt: Loop's Social Profile
   actions:
     - theme: 'brand'
       text: Tech 博客
@@ -32,3 +32,9 @@ features:
 
 ---
 
+<script setup>
+import Home from '../.vitepress/theme/Home.vue'
+
+</script>
+
+<Home/>

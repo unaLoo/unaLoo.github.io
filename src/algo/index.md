@@ -1,5 +1,6 @@
 ---
 layout: doc
+title: "algorithm"
 ---
 
 ## Loop`s algorithm Log

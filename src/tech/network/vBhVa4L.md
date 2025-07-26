@@ -1,5 +1,5 @@
 ---
-title: 'HTTP的版本差异-计网(10)'
+title: 'HTTP的版本差异'
 date: 2025-06-17
 tags:
   - 计算机网络
