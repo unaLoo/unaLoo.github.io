@@ -145,6 +145,16 @@
             "text": "运算符",
             "date": "2025-07-25T00:00:00.000Z",
             "link": "/tech/jsFundamentals/8"
+          },
+          {
+            "text": "JS的数据类型转换",
+            "date": "2025-07-25T00:00:00.000Z",
+            "link": "/tech/jsFundamentals/9"
+          },
+          {
+            "text": "JS的错误处理机制",
+            "date": "2025-07-26T00:00:00.000Z",
+            "link": "/tech/jsFundamentals/10"
           }
         ],
         "date": "2025-04-21T00:00:00.000Z",

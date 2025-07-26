@@ -9,58 +9,13 @@
 
 <body>
     <script>
-        // console.log(true + true === 1 + true, 1 + true === 2, false + 2 === 2) // true, true, true
-        // console.log('3' + 4 + 5, 3 + '4' + 5, 3 + 4 + '5') // 345 345 75
-        // console.log(true + '1', false + '1')
-
-        // console.log(true - true === 0, true - false === 1, true * 2 - 3 === -1) // true, true, true
-        // console.log('3' - 4 - 5, 3 - '4' - 5, 3 - 4 - 5) // -6 -6 -6
-        // console.log('123' - 2 === 121, '62' % 4 === 2) // true, true
-
-        // console.log({ a: 1 } - 1) // NaN
-        // console.log({ a: 1 } + 1) // [object Object]1
-
-        // console.log({ a: 1 } - 1) // NaN
-        // console.log({ a: 1 } + 1) // [object Object]1
-
-        // const obj = { a: 1 }
-        // // obj.valueOf = function () {
-        // //     return 100
-        // // }
-        // obj.toString = function () {
-        //     return 50
-        // }
-        // console.log(obj - 1) // 99
-        // console.log(obj + 1) // 101
-
-        // console.log(-1 % 2) // -1
-        // console.log(1 % -2) // 1
-
-        // console.log(null == 0, undefined == 0)   //  false, false
-        // console.log(null == false, undefined == false) //  false, false
-        // console.log(undefined == null, undefined === null) // true, false
-        // console.log(Number(null), Number(undefined)) // 0, NaN
-
-        // // 不同的两个原始类型转为数字比较
-        // console.log(0 == false, 1 == true)    // true, true
-        // console.log(0 == '', 0 == '0')    // true, true
-        // console.log(false == '', false == '0')    // true, true
-
-        // console.log(false == 'false', Number(false), Number('false')) // false 0 NaN
-
-        // // 同类型的直接比较，字符串的比较规则是逐字符比较
-        // console.log('' == '0') // 所以false
-
-
-        // console.log(' \t\r\n ' == 0, ' \t\r\n ' == false, ' \t\r\n ' == '')    // true, true, false
-
-        // console.log(2.9 | 0, Math.floor(2.9))
-        // console.log(-2.9 | 0, Math.floor(-2.9))
-
-var name = 'bob'
-var hi = (console.log('Hi!'), name = 'jk',  'byebye !'); // 'Hi!'
-console.log(name)
-console.log(hi) // jk
+        try {
+            throw new Error('my error')
+        } catch (e) {
+            console.log(e.stack)
+            // Error: my error
+            //     at playground.html:13:19
+        }
     </script>
 </body>
 
