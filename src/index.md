@@ -4,7 +4,7 @@ layout: home
 
 hero:
   name: "Loop`s Workshop"
-  text: " 实践 | 记录 | 分享 "
+  text: " 学习 | 实践 | 分享 "
 #   tagline: Loop 的个人博客
 #   image:
 #     src: /round.png

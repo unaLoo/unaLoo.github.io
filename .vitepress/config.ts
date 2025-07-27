@@ -25,7 +25,7 @@ export default defineConfig({
 
         ['meta', { property: 'og:type', content: 'website' }],
         ['meta', { property: 'og:title', content: 'Loop 的个人站点' }],
-        ['meta', { property: 'og:description', content: '实践 | 记录 | 分享' }],
+        ['meta', { property: 'og:description', content: '学习 | 实践 | 分享' }],
         ['meta', { property: 'og:image', content: 'https://ruanyf-weekly.plantree.me/thumbnail.jpg' }],
         ['meta', { property: 'og:url', content: 'https://ruanyf-weekly.plantree.me/' }],
         // analytics

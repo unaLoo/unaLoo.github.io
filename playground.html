@@ -9,13 +9,35 @@
 
 <body>
     <script>
-        try {
-            throw new Error('my error')
-        } catch (e) {
-            console.log(e.stack)
-            // Error: my error
-            //     at playground.html:13:19
+
+        const o = {
+            a: function () {
+                console.log(this)
+                const that = this
+
+                function b() {
+                    console.log(that)
+                }
+                b()
+            }
         }
+
+        o.a() //  {a: ƒ},  {a: ƒ}
+
+        const a = o.a
+        a() // window, window
+
+        // var o = {
+        //   f1: function () {
+        //     console.log(this);
+        //     var f2 = function () {
+        //       console.log(this);
+        //     }();
+        //   }
+        // }
+        // o.f1()
+        // // Object
+        // // Window
     </script>
 </body>
 
