@@ -158,38 +158,68 @@
           },
           {
             "text": "JS的错误处理机制",
-            "date": "2025-07-27T00:00:00.000Z",
+            "date": "2025-07-26T00:00:00.000Z",
             "link": "/tech/jsFundamentals/10"
           },
           {
             "text": "console 与浏览器控制台",
-            "date": "2025-07-28T00:00:00.000Z",
+            "date": "2025-07-27T00:00:00.000Z",
             "link": "/tech/jsFundamentals/11"
           },
           {
             "text": "标准库-Object对象",
-            "date": "2025-07-28T00:00:00.000Z",
+            "date": "2025-07-27T00:00:00.000Z",
             "link": "/tech/jsFundamentals/12"
           },
           {
             "text": "标准库-Array对象",
-            "date": "2025-07-28T00:00:00.000Z",
+            "date": "2025-07-27T00:00:00.000Z",
             "link": "/tech/jsFundamentals/13"
           },
           {
             "text": "标准库-Boolean\\Number\\String",
-            "date": "2025-07-28T00:00:00.000Z",
+            "date": "2025-07-27T00:00:00.000Z",
             "link": "/tech/jsFundamentals/14"
           },
           {
             "text": "OOP-构造函数与 new 命令",
-            "date": "2025-07-28T00:00:00.000Z",
+            "date": "2025-07-27T00:00:00.000Z",
             "link": "/tech/jsFundamentals/15"
           },
           {
             "text": "OOP-this",
-            "date": "2025-07-28T00:00:00.000Z",
+            "date": "2025-07-27T00:00:00.000Z",
             "link": "/tech/jsFundamentals/16"
+          },
+          {
+            "text": "OOP-继承",
+            "date": "2025-07-28T00:00:00.000Z",
+            "link": "/tech/jsFundamentals/17"
+          },
+          {
+            "text": "OOP-Object原型链相关方法",
+            "date": "2025-07-28T00:00:00.000Z",
+            "link": "/tech/jsFundamentals/18"
+          },
+          {
+            "text": "原生的模块化",
+            "date": "2025-07-28T00:00:00.000Z",
+            "link": "/tech/jsFundamentals/19"
+          },
+          {
+            "text": "严格模式",
+            "date": "2025-07-28T00:00:00.000Z",
+            "link": "/tech/jsFundamentals/20"
+          },
+          {
+            "text": "异步编程基础",
+            "date": "2025-07-28T00:00:00.000Z",
+            "link": "/tech/jsFundamentals/21"
+          },
+          {
+            "text": "DOM API",
+            "date": "2025-07-28T00:00:00.000Z",
+            "link": "/tech/jsFundamentals/22"
           }
         ],
         "date": "2025-04-21T00:00:00.000Z",

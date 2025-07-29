@@ -8,36 +8,18 @@
 </head>
 
 <body>
+    <h1>hello</h1>
+    <h2>guys</h2>
     <script>
-
-        const o = {
-            a: function () {
-                console.log(this)
-                const that = this
-
-                function b() {
-                    console.log(that)
-                }
-                b()
-            }
-        }
-
-        o.a() //  {a: ƒ},  {a: ƒ}
-
-        const a = o.a
-        a() // window, window
-
-        // var o = {
-        //   f1: function () {
-        //     console.log(this);
-        //     var f2 = function () {
-        //       console.log(this);
-        //     }();
-        //   }
-        // }
-        // o.f1()
-        // // Object
-        // // Window
+        document.addEventListener('DOMContentLoaded', function (event) {
+            document.write('<p>Hello World!</p>');
+        });
+        // 等同于
+        document.addEventListener('DOMContentLoaded', function (event) {
+            document.open();
+            document.write('<p>Hello World!</p>');
+            document.close();
+        });
     </script>
 </body>
 
