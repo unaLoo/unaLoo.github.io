@@ -154,6 +154,7 @@ function sidebar2RouterSidebar(srcBarItems) {
         SRC_DIR, // base argument
         generateSidebarWithDirStructure,
         sidebar2RouterSidebar,
-        (res) => console.log(JSON.stringify(res, null, 2))
+        // (res) => console.log(JSON.stringify(res, null, 2))
+        (res) => console.log(JSON.stringify(res, null))
     )
 })()
