@@ -29,16 +29,16 @@ export default defineConfig({
         ['meta', { property: 'og:image', content: 'https://ruanyf-weekly.plantree.me/thumbnail.jpg' }],
         ['meta', { property: 'og:url', content: 'https://ruanyf-weekly.plantree.me/' }],
         // analytics
-        ['script', { async: '', src: 'https://www.googletagmanager.com/gtag/js?id=TAG_ID' }],
+        ['script', { async: '', src: 'https://www.googletagmanager.com/gtag/js?id=G-HMPZSQWEV1' }],
         [
             'script',
             {},
-            `window.dataLayer = window.dataLayer || [];
-             function gtag(){dataLayer.push(arguments);}
-             gtag('js', new Date());
-             gtag('config', 'TAG_ID');`
+            `  window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', 'G-HMPZSQWEV1');`
         ],
-        ['script', { src: '/analytic.js', defer: '', }],
+        // ['script', { src: '/analytic.js', defer: '', }],
     ],
 
     // theme
