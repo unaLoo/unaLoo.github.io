@@ -2,94 +2,27 @@
 <html lang="en">
 
 <head>
+    <title>css阻塞</title>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        .body {
-            margin: auto;
+        h1 {
+            color: rgb(0, 255, 0);
         }
     </style>
+
+    <script>
+        setTimeout(() => {
+            console.log('head script', document.querySelector('#hh').textContent)
+        }, 1);
+    </script>
+    <link href="https://cdn.bootcss.com/bootstrap/4.0.0-alpha.6/css/bootstrap.css" rel="stylesheet">
 </head>
 
 <body>
-    <h1 id="dom1"></h1>
-    <h2 id="dom2"></h2>
-    <h2 id="dom3"></h2>
+    <h1 id="hh">hhhh</h1>
     <script>
-
-        const sfc = {
-            _data: {
-                name: 'wang'
-            },
-            tickCallback: new Set(),
-            pending: false,
-
-            init() {
-                this.r = this.render.bind(this)
-
-                // 初始化响应式数据
-                this.data = new Proxy(this._data, {
-                    get(target, key) {
-                        return Reflect.get(target, key)
-                    },
-                    set: (target, key, newValue) => {
-                        Reflect.set(target, key, newValue)
-                        this.nextTick(this.r)
-                        this.flush()
-                    }
-                })
-            },
-
-            nextTick(fn) {
-                this.tickCallback.add(fn)
-                this.flush()
-            },
-
-            flush() {
-                if (this.pending === false) {
-                    this.pending = true
-                    Promise.resolve().then(() => {
-                        const cbs = [...this.tickCallback]
-                        this.tickCallback.clear()
-                        this.pending = false
-                        for (let cb of cbs) {
-                            cb()
-                        }
-
-                        // 当 nextTick 中又新增了nextTick, 也就是在 nextTick 的 callback 中 又修改了数据，那需要派发下一次 flucsh
-                        if (this.tickCallback.size > 0) {
-                            this.flush()
-                        }
-                    })
-                }
-            },
-
-            render() {
-                console.log('dom render, name is ', this._data.name)
-            }
-        }
-
-        sfc.init()
-        sfc.nextTick(() => {
-            console.log('start render')
-        })
-        sfc.data.name = 'dj1'
-        sfc.data.name = 'dj2'
-        sfc.data.name = 'dj3'
-        sfc.nextTick(() => {
-            console.log('end render')
-            sfc.data.name = 'not'
-        })
-
-        /* log:
-            start render
-            dom render, name is  dj7
-            end render，
-            dom render, name is  not
-        */
-
-
+        console.log('body script', document.querySelector('#hh').textContent)
     </script>
 </body>
 
