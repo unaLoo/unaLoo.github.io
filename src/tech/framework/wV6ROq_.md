@@ -12,7 +12,7 @@ tags:
 
 ### 1. 1 Proxy 的颠覆性
 
-Object.defineProperty 是对象的属性劫持，只能劫持对象的属性。
+`Object.defineProperty` 是对象的属性劫持，只能劫持对象的属性。
 Proxy 是对象的代理，可以代理对象的属性、方法、甚至整个对象，这不是一个level的。
 
 Proxy的handle里提供了一堆拦截方法(trap)，可以拦截对象的所有操作。

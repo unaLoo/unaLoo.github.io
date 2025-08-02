@@ -4,7 +4,7 @@ date: 2025-06-24
 tags:
   - 数据结构
 ---
-
+# 字符串
 ### 注意：
 - 在js里，字符不能直接和数字比较，需要先转换为ASCII码，`'a'.charCodeAt() === 97`
 - 大小写转换：`'a'.toUpperCase() === 'A'`，`'A'.toLowerCase() === 'a'`

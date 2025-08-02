@@ -7,7 +7,9 @@ tags:
   - docker
 ---
 
-> 一次使用 Docker 本地启动 Jekyll 个人博客以及最终利用Github Pages托管的实践过程，记录了依赖安装、SCSS 编译、linu文件写入权限等问题## 背景
+> 一次使用 Docker 本地启动 Jekyll 个人博客以及最终利用Github Pages托管的实践过程，记录了依赖安装、SCSS 编译、linu文件写入权限等问题
+
+## 背景
 
 我想在本地部署一个 Jekyll 博客模板进行个性化开发，因为不想折腾 Windows 本地环境和 WSL，于是我选择了用 Docker 来运行 Jekyll。
 

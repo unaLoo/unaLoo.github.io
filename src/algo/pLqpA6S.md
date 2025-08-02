@@ -4,7 +4,7 @@ date: 2025-03-13
 tags:
   - 数据结构
 ---
-
+# 数组
 # 二分查找
 ## [$704 二分查找 ](https://leetcode.cn/problems/binary-search/)
 ### 关键点

@@ -5,11 +5,13 @@
     },
     "scripts": {
         "dev": "npm run prepare && vitepress dev",
-        "test": "vitepress dev",
+        "test": "node ./scripts/sync.js",
         "build": "vitepress build",
         "preview": "vitepress preview --port 8080",
         "fix": "node ./scripts/fixMd.js",
-        "prepare": "node ./scripts/sidebar.js > ./scripts/sidebar.json"
+        "prepare": "npm run sideBar && npm run sync",
+        "sideBar": "node ./scripts/sidebar.js > ./scripts/sidebar.json",
+        "sync": "node ./scripts/sync.js > ./scripts/log.txt"
     },
     "dependencies": {
         "glob": "^11.0.3",
