@@ -4,12 +4,12 @@
         "vitepress": "^1.6.3"
     },
     "scripts": {
-        "dev": "npm run prepare && vitepress dev",
+        "dev": "npm run preprocess && vitepress dev",
         "test": "node ./scripts/sync.js",
         "build": "vitepress build",
         "preview": "vitepress preview --port 8080",
         "fix": "node ./scripts/fixMd.js",
-        "prepare": "npm run sideBar && npm run sync",
+        "preprocess": "npm run sideBar && npm run sync",
         "sideBar": "node ./scripts/sidebar.js > ./scripts/sidebar.json",
         "sync": "node ./scripts/sync.js > ./scripts/log.txt"
     },

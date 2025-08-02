@@ -52,7 +52,7 @@ function parseFrontMatterSync(filepath) {
     return metadata
 }
 
-function generateSidebarWithDirStructure(dir) {
+function generateSidebarWithDirStructure(dir, excludes = []) {
 
     const entries = fs.readdirSync(dir, { withFileTypes: true });
     const barItems = []
@@ -71,7 +71,8 @@ function generateSidebarWithDirStructure(dir) {
     // Process entry
     entries.forEach(entry => {
 
-        if (entry.isDirectory() && entry.name != 'public') {
+        // if (entry.isDirectory() && entry.name != 'public') {
+        if (entry.isDirectory() && !excludes.includes(entry.name)) {
 
             const subDirPath = path.join(dir, entry.name)
             const subDirItems = generateSidebarWithDirStructure(subDirPath)
@@ -149,12 +150,17 @@ function sidebar2RouterSidebar(srcBarItems) {
 
 
 /////// Main //////////////////////////////////
+
+const genSidebarWithExcludes = (arg) => {
+    return generateSidebarWithDirStructure(arg, ['public', 'post-assets', '.obsidian'])
+}
+
 (function () {
     pipeRuning(
         SRC_DIR, // base argument
-        generateSidebarWithDirStructure,
+        // generateSidebarWithDirStructure,
+        genSidebarWithExcludes,
         sidebar2RouterSidebar,
-        // (res) => console.log(JSON.stringify(res, null, 2))
         (res) => console.log(JSON.stringify(res, null))
     )
 })()
