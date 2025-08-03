@@ -34,11 +34,11 @@ Liquid 的语法非常简洁，主要由以下三种标签类型组成：
 
 #### 🧱 基本语法结构
 
-![liquid.png](/post-assets/liquid.png)
+![liquid.png](../assets/liquid.png)
 (好家伙在这里用Liquid居然会G，编译不通过)
 
 ##### 3. 过滤器（Filters）
-![filter.png](/post-assets/i2. png)
+![filter.png](../assets/i2. png)
 
 
 #### 🧰 常用内建对象
@@ -54,7 +54,7 @@ Liquid 的语法非常简洁，主要由以下三种标签类型组成：
 
 ### 2️⃣ 个人信息修改
 非常Eazy，填入个人信息就可以套模板，没有的东西不填就好，在模板里会作判断
-![_config.yml](/post-assets/selfIntro.png)
+![_config.yml](../assets/selfIntro.png)
 
 ### 3️⃣ 导航栏和路由结构修改
 
@@ -144,7 +144,7 @@ share: false
 
 卡片的CSS和HTML就不展开说了，都是采用Liquid语法写的dom，其中，因为这个组件是包在post循环里面的，所以组件内部可以访问到`post`这个变量，代表当前循环的post对象，也就可以取信息，做展示了。
 
-![alt text](/post-assets/i1. png)
+![alt text](../assets/i1. png)
 
 ### 6️⃣ 调试测试
 用上文提到的`docker-compose`快速重启，在本地调试，查看效果，可以看到新加的算法目录下能够按指定的layout和page展示出博客列表了。

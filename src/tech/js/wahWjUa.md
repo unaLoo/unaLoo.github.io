@@ -42,7 +42,7 @@ tags:
 
 这种场景下，前端不需要做啥处理，全仰仗浏览器。
 
-![触发下载的两种形式](//post-assets/triggerDownload.png)
+![触发下载的两种形式](../../assets/triggerDownload.png)
 
 ### 1 大文件，分块下载
 > 从Minio上拉文件时，就是分块的，会创建一个.part文件，最终所有分块的文件会合并成一个文件。

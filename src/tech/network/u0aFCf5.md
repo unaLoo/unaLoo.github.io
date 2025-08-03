@@ -29,7 +29,7 @@ tags:
 
 当响应头中包含这些指令时，浏览器会根据这些指令来缓存资源。刷新网页，在网络面板可以看到 memory cache 和 disk cache 的缓存。
      
-![浏览器缓存](/post-assets/browserCache.png)
+![浏览器缓存](../../assets/browserCache.png)
 
 ### 请求头中的缓存指令(客户端设置) 
 
@@ -53,7 +53,7 @@ tags:
     
 协商缓存最大好处是，浏览器可以缓存资源，减少请求，提高性能。
      
-![协商缓存](/post-assets/协商缓存.png)
+![协商缓存](../../assets/协商缓存.png)
 
 
 ## 补充

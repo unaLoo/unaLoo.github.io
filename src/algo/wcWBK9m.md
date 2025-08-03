@@ -166,7 +166,7 @@ function qSelect(arr, left, right, k) {
   - 遍历字符，遇数累计数`num`，遇字符累计字符`curStr`
   - 遇到`[`，把`num`和`curStr`入栈，并重置`num`和`curStr`
   - 遇到`]`，把栈顶的`num`和`curStr`pop出来，把`curStr`重复`num`次，然后和栈顶的`str`拼接得到新的`curStr`   
-  ![394](/post-assets/394. png)
+  ![394](../assets/394. png)
 
 
 #### 946. 验证栈序列

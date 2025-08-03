@@ -33,8 +33,8 @@ DNS服务器分类：
 
 ---
 
-![本地DNS配置更改](/post-assets/dnsHost.png)
-![测试](/post-assets/pingTest.png)
+![本地DNS配置更改](../../assets/dnsHost.png)
+![测试](../../assets/pingTest.png)
 
 ---
 
@@ -49,7 +49,7 @@ DNS服务器分类：
 
 其中，一般本机和域名服务器都有高速缓存，目的是减少查询次数。
 
-![域名解析流程](/post-assets/DNS.png)
+![域名解析流程](../../assets/DNS.png)
 
 
 ## CDN

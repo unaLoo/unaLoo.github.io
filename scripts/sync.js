@@ -1,4 +1,5 @@
-// Inorder to sync local image to public/post-assets
+// Deprecated 20250802
+// Inorder to sync local image to public../assets
 
 import path from 'path'
 import fs from 'fs/promises'

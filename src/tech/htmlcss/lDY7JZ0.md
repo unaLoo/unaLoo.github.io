@@ -206,7 +206,7 @@ BFC就是页面中的一个隔离的独立容器，容器里的标签不会影�
 
 </html>
 ```
-![上下边距塌陷](/post-assets/marginCollapse.png)
+![上下边距塌陷](../../assets/marginCollapse.png)
 
 ## 参考资料
 - [MDN - Block formatting context](https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Block_formatting_context){target="_blank" rel="noreferrer"}

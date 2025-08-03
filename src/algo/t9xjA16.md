@@ -188,7 +188,7 @@ function strStr(ogStr, subStr) {
 ### 43. 字符串相乘
 - 描述：给定两个用字符串表示的非负整数，求它们的乘积
 - 思路：[乘法的剖解](https://leetcode.cn/problems/multiply-strings/solutions/188815/gao-pin-mian-shi-xi-lie-zi-fu-chuan-cheng-fa-by-la/)
-  - ![乘法剖解](/post-assets/043. png)
+  - ![乘法剖解](../assets/043. png)
   - resArr的初始大小为`num1. length + num2. length`，因为两个数相乘，结果最多为两个数的长度之和
   - 处理i和j时，恰好对应resArr的`i+j`和`i+j+1`,主要是`i+j+1`低位加和
   - 最后把resArr转换为字符串，并去除前导0

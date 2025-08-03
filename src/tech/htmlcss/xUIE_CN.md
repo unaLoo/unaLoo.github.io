@@ -6,7 +6,7 @@ tags:
 
 ---
 
-> Reflow和Repaint是影响Web应用性能的重要因素，他们是什么，如何避免？![浏览器页面呈现流程](/post-assets/edgeshow.png)
+> Reflow和Repaint是影响Web应用性能的重要因素，他们是什么，如何避免？![浏览器页面呈现流程](../../assets/edgeshow.png)
 
 
 ## 1️⃣ 首先，浏览器是如何呈现一个Web应用的？
@@ -14,8 +14,8 @@ tags:
 ### 1. 用户输入URL，浏览器从服务器获取HTML源代码*
   
    👉 浏览器中的网络线程获取到HTML之后，会构建一个渲染任务，并传递给渲染主线程的息队列。在事件循环机制下，渲染主线程取出渲染任务，开始渲染。  
-  ![解析HTML时遇到CSS](/post-assets/findcss.png)
-  ![解析HTML时遇到JS](/post-assets/findjs.png)
+  ![解析HTML时遇到CSS](../../assets/findcss.png)
+  ![解析HTML时遇到JS](../../assets/findjs.png)
    
 ---
 ### 2. 浏览器解析HTML,  构建DOM树和构建CSSOM树
@@ -36,7 +36,7 @@ tags:
 ---
 ### 5. 重绘(**Repaint**)在页面上进行绘制，包含分块、光栅化和绘制等过程
 
-   ![浏览器Paint](/post-assets/edgedraw.png)
+   ![浏览器Paint](../../assets/edgedraw.png)
 
 
 
@@ -124,5 +124,5 @@ tags:
 
 
 ## 参考资料
-- [Understanding Reflow and Repaint in the browser](/post-assets/https://dev.to/gopal1996/understanding-reflow-and-repaint-in-the-browser-1jbg){target="_blank" rel="noreferrer"}
+- [Understanding Reflow and Repaint in the browser](https://dev.to/gopal1996/understanding-reflow-and-repaint-in-the-browser-1jbg){target="_blank" rel="noreferrer"}
 
