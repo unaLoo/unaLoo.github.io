@@ -18,7 +18,6 @@ tags:
   ```
   
 
-
 ### KMP手写
 描述：实现`getNext`函数，返回next数组, 实现`strStr`函数，返回子串在主串中的位置
 ```js 
@@ -183,6 +182,8 @@ function strStr(ogStr, subStr) {
     }
     return res.reverse().join('')
   }
+
+```
 
 
 ### 43. 字符串相乘

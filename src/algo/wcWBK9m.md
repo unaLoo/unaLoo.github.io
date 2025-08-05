@@ -88,7 +88,7 @@ for(let i = 0 ; i < nums.length; i++){
 
 > topk问题：类似的还有求前k个最大的数，通常是两种解决方案，一个是利用小顶堆，一个是利用快速排序的兄弟Quick-Selction,堆的内容再专门写一下。这里先讲一下快速选择的思路。
 
-```
+```js
 function qSelect(arr, left, right, k) {
 
     if (left >= right) return
@@ -228,7 +228,7 @@ function qSelect(arr, left, right, k) {
 - 描述：类似的，给数组，给一个方法`next(price)`，返回当前加个之前小于等于它的个数
 - 注意：
   - 要找在它之前小于等于它的个数，**相当于是找左侧第一个比它大的数**，然后返回index差
-  - 为了少存一个priceList，可以让stack中的元素为[price, index]
+  - 为了少存一个priceList，可以让stack中的元素为`[price, index]`
 
 - 实现：
   - 在next方法中（插入新元素时）

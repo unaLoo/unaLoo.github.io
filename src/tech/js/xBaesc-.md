@@ -236,15 +236,14 @@ console.log(returnedTarget === target); // true, 引用相同
 核心方法： 基本和Object的方法一一对应， 但返回布尔值或结果， 不抛异常
 
 - `Reflect.has(obj, prop)` --- 判断对象是否具有某个属性
-- `Reflect.get(obj, prop)` --- 获取对象的属性值
-- `Reflect.set(obj, prop, value)` --- 设置对象的属性值
+- `Reflect.get(obj, prop, receiver?)` --- 获取对象的属性值
+- `Reflect.set(obj, prop, value,receiver?)` --- 设置对象的属性值
 - `Reflect.defineProperty(obj, prop, descriptor)` --- 定义对象的属性
 - `Reflect.deleteProperty(obj, prop)` --- 删除对象的属性
 - `Reflect.getOwnPropertyDescriptor(obj, prop)` --- 获取对象的属性描述符
 - `Reflect.getPrototypeOf(obj)` --- 获取对象的原型
 - `Reflect.setPrototypeOf(obj, proto)` --- 设置对象的原型
 - `Reflect.ownKeys(obj)` --- 获取对象的自身属性
-
 
 #### 示例：用 Reflect 替代传统方法
 
@@ -284,6 +283,35 @@ console.log(Reflect.ownKeys(obj));  // 输出：[ 'foo', Symbol(bar) ]
 
 - 不抛错，适合用于通用库封装
 - 更好地与 Proxy 联动
+
+
+**补充**：对于 `setter` 和 `getter`, `receiver`则为调用时的`this`值。
+```js
+   const p1 = {
+		lastName: '张',
+		firstName: '三',
+		get fullName() {
+			console.log(this)
+			return this.lastName + this.firstName
+		}
+	}
+
+	const proxy = new Proxy(p1, {
+		get(target, key, receiver) {
+			console.log(receiver === proxy) // true
+			console.log('getter :', key)
+			return target[key]
+			// return Reflect.get(target, key, receiver)
+		}
+	})
+
+	proxy.fullName
+```
+在不使用 `receiver` 时，getter 只会打印**一次**，此时 `fullName` 中的 `this` 指向 `p1`
+在使用 `receiver` 时，getter 打印**三次**, 此时 `fullName` 中的 `this` 指向 `proxy`
+
+
+
 
 ---
 

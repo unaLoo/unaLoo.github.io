@@ -172,8 +172,6 @@ var postorderTraversal = function (root) {
         return 1 + max(ld, rd)      // 中
     }
     ```
-  - 回溯方案
-    - 待补充...
   - 迭代方案
     - 基于队列的层序遍历实现，最大层数即为最大深度
   
