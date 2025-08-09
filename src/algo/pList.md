@@ -105,4 +105,38 @@ tags:
 
 ### 146. LRU Cache
 
-哈希表 + 双向链表 + 静态dummyHead/Tail
+体量很大的一题
+
+- 哈希表 + 双向链表
+- 链表中，离head越近表示越新
+- 固定的 demmyHead + dummyTail， 通过头插法保持头尾固定
+- dummyTail 实现了 O(1) 查找链表末尾元素
+- 实现的时候要有提取公共方法的意识，比如 `deleteNode` `headInsert` `move2head`
+- 不要遗漏了 map 的操作
+### 25. K 个一组反转链表
+
+1. `dummyHead`
+2. 启一个 while true
+3. 找 k 个作为一个 group，找不到的时候退出循环
+4. **头插法**反转，每次只操作 k - 1个节点
+5. 注意 group 之间的**连接**操作
+
+
+### 23. 合并 K 个升序链表
+
+给一个链表数组，每个链表都是升序的，把他们合并为一个升序链表。
+
+1. 合并两个有序链表的 function
+2. 朴素两两合并---> 进阶归并合并
+```js
+    // 方法二：分治合并
+    function merge(lists, left, right) {
+        if (left === right) return lists[left]
+        if (left > right) return null
+        const mid = (left + right) / 2 | 0
+        const lpart = merge(lists, left, mid)
+        const rpart = merge(lists, mid + 1, right)
+        return merge2list(lpart, rpart)
+    }
+    return merge(lists, 0, lists.length - 1)
+```

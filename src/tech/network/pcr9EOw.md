@@ -64,7 +64,7 @@ CORS规定了三种不同的交互模式，三种模式自上而下要求越来�
       - `Access-Control-Allow-Origin`字段，表示允许的源, __不能是`*`__!
       - `Access-Control-Allow-Methods`字段，表示允许的请求方法
       - `Access-Control-Allow-Headers`字段，表示允许的请求头
-      - `Access-Control-Allow-Max-Age`字段，表示允许的请求最大时间, 时间内不需要再次发送预检请求、
+      - `Access-Control-Max-Age`字段，表示允许的请求最大时间, 时间内不需要再次发送预检请求、
     
     
     - 浏览器发送真实请求，请求头还是带着`Origin`字段
@@ -93,7 +93,25 @@ CORS规定了三种不同的交互模式，三种模式自上而下要求越来�
     
     - 浏览器收到响应后，JS正常执行后续代码逻辑
 
-小的补充，在CORS，服务器需要设置`Access-Control-Expose-Headers`字段，表示允许的响应头，否则JS只能获取最基本的响应头
+
+服务端的 CORS 配置，以`Nodejs`为例
+```js
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*')
+    res.header('Access-Control-Allow-Method', 'GET, POST, PUT, DELETE, OPTIONS')
+    res.header('Access-Control-Allow-Headers',
+        'Content-Type, Authorization, Content-Length, X-Requested-With');
+    // 3600s 内不用再预检了
+	res.header('Access-Control-Max-Age', '3600')
+
+    if (req.method == 'OPTIONS') {
+        console.log('option ! !!')
+        res.sendStatus(200)
+        return
+    }
+    next()
+})
+```
 
 
 ### JSONP

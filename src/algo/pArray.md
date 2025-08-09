@@ -334,4 +334,63 @@ tags:
 
   ```
   
-  
+
+## 33. 搜索旋转排序数组
+
+**方法一：效率低**
+先找 k 再二分查找
+```js
+// find k
+let k = 1
+while (k < nums.length && nums[k] > nums[k - 1]) k++
+
+const bSearch = (arr, left, right, target) => {
+	if (left > right) return -1
+	const mid = (left + right) / 2 | 0
+	if (arr[mid] === target) return mid
+	else if (arr[mid] > target) return bSearch(arr, left, mid - 1, target)
+	else return bSearch(arr, mid + 1, right, target)
+}
+
+// two part search
+const a = bSearch(nums, 0, k - 1, target)
+const b = bSearch(nums, k, nums.length - 1, target)
+```
+
+**方法二：直接二分查找，二分地缩小区间**
+- 计算 mid
+- （直接找到 target 的话，提前返回）
+- 如果左侧有序
+	- 如果 target 在左侧，即 `nums[left] < target < nums[mid]`，那在左侧找
+	- 否则在右侧
+- 如果右侧有序
+	- 如果target 在右侧，即 `nums[mid] < target < nums[right]`，那在右侧找
+	- 否则在左侧
+
+
+## 88. 合并两个有序数组
+
+方法一：开辟新数组，双指针同时遍历两个数组，填入新数组
+
+方法二：原地合并，因为 num1 的后半部分是空的，所以从后半部分往前填充，**逆向的双指针**，注意 m=0 和 n=0 情况的处理
+```js
+// 原地法
+let tail = m + n - 1
+let i = m - 1; j = n - 1 // 指向未确定部分的最大值
+while (i >= 0 || j >= 0) {
+	// 这样就很清晰，处理了各种情况
+	let selected
+	if (i == -1) {
+		selected = nums2[j--]
+	} else if (j == -1) {
+		selected = nums1[i--]
+	} else if (nums1[i] > nums2[j]) {
+		selected = nums1[i--]
+	} else {
+		selected = nums2[j--]
+	}
+	nums1[tail--] = selected
+}
+```
+
+

@@ -42,6 +42,7 @@ function backtrack(路径, 选择列表) {
 还比较清晰，注意startIndex的取值，注意选择列表
 
 
+
 ## 分割问题
 
 - leetcode 131 分割回文串[https://leetcode.cn/problems/palindrome-partitioning/]
@@ -180,3 +181,28 @@ var solveNQueens = function (n) {
     return result
 };
 ```
+
+
+## 题目
+
+### 全排列
+
+全排列主要是在回溯过程中，需要记录**有哪些数字可用**
+
+方法一：使用 filter 过滤 availableNums , 效率低
+```js
+ const backTrack = (availableNums) => {
+        if (cur.length === nums.length) {
+            res.push(cur.slice())
+            return
+        }
+        for (const num of availableNums) {
+            cur.push(num)
+            backTrack(availableNums.filter(n => n != num))
+            cur.pop()
+        }
+    }
+```
+
+方法二：用一个全局的 visited 数组来记录，同样参与回溯
+
