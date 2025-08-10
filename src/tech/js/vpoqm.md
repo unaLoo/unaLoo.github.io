@@ -1,10 +1,10 @@
 ---
-title: 大数据列表/卡片的渲染方案(一)
+title: 大数据列表/卡片的渲染方案
 date: 2025-08-09
 tags:
   - JavaScript
 ---
-# 大数据列表的渲染方案(一)
+# 大数据列表的渲染方案
 
 长列表渲染是重要的性能优化和用户体验优化手段，在 web 端，一些记录日志模块，数据展示后台需要用到，在移动端更加重要，比如中午我用京东点外卖，划拉划拉着就越来越卡，体验很差。
 
@@ -318,3 +318,160 @@ observer.observe(sentinel)
 - `scroll` 事件会在滚动过程中**持续不断**触发，所以必须手动节流/防抖，否则会高频执行。
 - `IntersectionObserver` 是浏览器**底层优化过的可见性监听器**，它不是每一帧都调用回调，而是在浏览器布局/绘制完成、可见性变化时才触发，并且已经做了批量处理和节流。
 - 所以在大多数场景下，直接用它就够流畅、性能好，不需要额外 throttle。
+
+
+
+## 虚拟列表
+
+虚拟列表，只渲染可视域的元素，核心思路如下图：
+- 占位的 placeHolder，提供一个滚轮。
+- 固定的 DOM ，变化的内容。
+- 监听滚动，计算可视区域所需的数据，更新 DOM。
+- 把整个列表容器不断移动，和视口同步。
+![](../../assets/Pasted%20image%2020250810182841.png)
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            background-color: rgb(57, 57, 57);
+        }
+
+        .container {
+            position: relative;
+            width: 500px;
+            height: 700px;
+            background-color: whitesmoke;
+            overflow-y: auto;
+            /* padding: 25px; */
+        }
+
+        #list {
+            margin-left: 50px;
+        }
+
+        #list :nth-child(n) {
+            background-color: rgb(57, 57, 57);
+            color: rgb(214, 214, 214);
+        }
+
+        .item {
+            width: 370px;
+            height: 50px;
+            /* box-shadow: inset gainsboro 1px 1px 4px 0px; */
+            text-align: center;
+            line-height: 50px;
+        }
+
+        #spacer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgb(255, 227, 227);
+            z-index: -1;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div id="spacer"></div>
+        <div id="list"></div>
+    </div>
+
+    <script>
+
+        /////// Data //////////////////////////////////
+        function fetchData() {
+            return new Array(1000).fill(0).map((item, i) => {
+                return {
+                    id: i,
+                    title: `这是第${i}条数据`
+                }
+            })
+        }
+        const data = fetchData()
+        const itemTotalCount = data.length
+
+        /////// Initial //////////////////////////////////
+        const container = document.querySelector('.container')
+        const spacer = document.querySelector('#spacer')
+        const listDom = document.querySelector('#list')
+        const itemHeight = 50 // 设定的
+
+        // 设置 spacer
+        spacer.style.height = `${itemTotalCount * itemHeight}px`
+
+        // visibleCount 与 renderCount
+        const visibleCount = Math.ceil(container.clientHeight / itemHeight)
+        const buffer = 1
+        const renderCount = visibleCount + buffer
+
+        // 初始化固定数目的节点
+        const fm = document.createDocumentFragment()
+        for (let i = 0; i < renderCount; i++) {
+            const itemDom = document.createElement('div')
+            itemDom.classList.add('item')
+            fm.appendChild(itemDom)
+        }
+        listDom.appendChild(fm)
+        const domList = listDom.children
+
+        // 在滚动时执行的渲染函数
+        function render() {
+
+            // 1. 计算 startID 和 endID
+            const scrollTop = container.scrollTop
+            const maxStartID = itemTotalCount - renderCount
+            const startID = Math.min(Math.floor(scrollTop / itemHeight), maxStartID)
+            const endID = Math.min(itemTotalCount, startID + renderCount)
+            console.log(startID, endID)
+            // 2. 更新 DOM
+            const visible = data.slice(startID, endID)
+            visible.forEach((item, i) => {
+                domList[i].textContent = item.title
+                domList[i].style.display = 'block'
+            })
+            for (let i = visible.length; i < domList.length; i++) {
+                domList[i].style.display = 'none'
+            }
+            // 3. 移动 ListDom
+            const offsetY = scrollTop - scrollTop % itemHeight
+            listDom.style.transform = `translateY(${offsetY}px)`
+        }
+
+        // 绑定滚动函数
+        let pending = false
+        container.addEventListener('scroll', _ => {
+            if (!pending) {
+                requestAnimationFrame(() => {
+                    render()
+                    pending = false
+                })
+                pending = true
+            }
+        })
+        // 初始时 render 一次
+        render()
+
+    </script>
+</body>
+
+</html>
+```

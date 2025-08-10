@@ -140,3 +140,40 @@ tags:
     }
     return merge(lists, 0, lists.length - 1)
 ```
+
+### 143. 重排链表
+
+给定一个单链表 `L` 的头节点 `head` ，单链表 `L` 表示为：
+`L0 → L1 → … → Ln - 1 → Ln`
+变为
+`L0 → Ln → L1 → Ln - 1 → L2 → Ln - 2 → …`
+
+方法一：时间 O(n2) 
+每次找尾巴，然后头插入。
+
+方法二: 找中间节点 + 反转后半部分 + 合并两链表
+
+
+### 160. 相交链表
+
+如下图，找到相交节点。
+![](../assets/Pasted%20image%2020250810225018.png)
+方法一：哈希表
+A 先遍历一遍，构建哈希表，注意哈希表是存整个 `node` ， B 再走一遍，有相同的话，就是相交节点。
+
+方法二：双指针同时走，终点换赛道，总会相遇，null 也是一种相遇
+
+![](../assets/Pasted%20image%2020250810225158.png)
+```js
+var getIntersectionNode = function (headA, headB) {
+    let curA = headA
+    let curB = headB
+    while (curA != curB) {
+        if (curA) curA = curA.next
+        else curA = headB  // 换赛道
+
+        if (curB) curB = curB.next
+        else curB = headA // 换赛道
+    }
+    return curA
+```
