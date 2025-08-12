@@ -206,3 +206,50 @@ var solveNQueens = function (n) {
 
 方法二：用一个全局的 visited 数组来记录，同样参与回溯
 
+### 93. 复原 IP
+
+题目如下：给字符串，输出所有可能的 ip 地址
+![](../assets/Pasted%20image%2020250811174006.png)
+
+条件：
+- 每个部分是 1 - 3 个字符， 区间是 `[0, 255]`
+- 共四个部分
+- '0' 是 ok 的，但 ’00‘ ’05‘ 是不合法的
+- 要把字符用完！
+
+思路：回溯 + 具体条件判定
+自然是带着 startId 的回溯，每次循环内不用全部遍历，遍历 `[startId, startId + 2 ]` 即可。
+
+
+```js
+var restoreIpAddresses = function (s) {
+	res = []
+	path = []
+	
+	function bTrace(startId){
+		// 四个部分
+		if(path.length > 4) return
+		// 要把 s.length 个字符用完 
+		if(path.length === 4 && startId == s.length){
+			res.push(path.join('.'))
+			return			
+		}
+		// 循环回溯， 1-3 个字符
+		for(let i = startId; i< s.length && i < startId + 3; i++){
+			const substr = s.slice(startId, i + 1)
+			// 0 - 255 判断
+			if(parseInt(substr) > 255) 
+				continue
+			// 前导 0 判断
+			if(substr.length > 1 && substr[0] === '0')
+				continue
+			// 回溯
+			path.push(substr)
+			bTrace(i+1)
+			path.pop()
+		}
+	}
+	bTrace(0)
+	return res
+}
+```

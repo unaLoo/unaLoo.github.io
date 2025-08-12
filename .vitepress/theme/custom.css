@@ -13,3 +13,10 @@ div.VPHomeHero>div.container>div.main {
     align-items: center;
     padding: 5vh;
 }
+
+img {
+    display: block;
+    margin: auto;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}

@@ -224,11 +224,14 @@ for( j < i ){
 - 输入：text1 = `"abcde"`, text2 =`"ace"` 最长公共子序列是 "ace" ，它的长度为 3 。
 
 **推导实现**： 
-- `dp[i][j]`表示，text1的`[0，i）`部分 和 text2`[0, j)`部分的最长公共子序列。
-- 如果已知"a"和"a"的最长公共子序列的前缀是“a”
-- 如果是"ab"和"aa"，新的字符不相等， `dp[i][j] = max(dp[i-1][j] + dp[i][j-1])`
-- 如果是"ab"和“ab”，新字符相等，`dp[i][j] = dp[i-1][j-1] + 1`
+`dp[i][j]`表示，text1的`[0，i）`部分 和 text2`[0, j)`部分的最长公共子序列。
+```txt
+- 当 text1[i - 1] == text2[j - 1] 时，说明两个子字符串的最后一位相等，所以最长公共子序列又增加了 1，所以 dp[i][j] = dp[i - 1][j - 1] + 1；
+比如对于 ac 和 bc 而言，他们的最长公共子序列的长度等于 a 和 b 的最长公共子序列长度 0 + 1 = 1。
 
+- 当 text1[i - 1] != text2[j - 1] 时，说明两个子字符串的最后一位不相等，那么此时的状态 dp[i][j] 应该是 dp[i - 1][j] 和 dp[i][j - 1] 的最大值。
+比如对于 ace 和 bc 而言，他们的最长公共子序列的长度等于ace 和 b 的最长公共子序列长度0 与 ac 和 bc 的最长公共子序列长度1 的最大值，即 1。
+```
 ## 最长重复子数组
 
 **题目**：子数组是原数组中切出来的一块，求两个整数数组的最长重复子数组。有点类似上一题，更简单一些
@@ -312,47 +315,57 @@ for (let i = 1; i < nums.length; i++) { // 遍历物品
 ## 编辑距离
 **题目**：把一个字符串编辑为另一个字符串的最小操作次数，可以替换、删除、插入
 
+
+理解和推导:  
+
+```txt
+
+dp[i][j] 将 word1[0,i) 变到 word2[0,j)需要几步
+已知 dp[0][0] = 0; 那么：
+- 插入 dp[0][1] = 1; 
+- 删除 dp[1][0] = 1; 
+- 替换 dp[1][1] = 0 or 1 
+
+对于替换的理解，已知dp[i-1][j-1], 现在  word1[i] !== word2[j], 那么把 word1[i] 替换为word2[j]就行了，也是一次操作
+
+===========================================================
+
+综上：
+word1[i] === word2[j] ? dp[i][j] = dp[i-1][j-1] 
+word1[i] !== word2[j] ? 
+dp[i][j] = 【dp[i-1][j] + 1 】 or 
+【dp[i+1][j] + 1 】 or 
+【dp[i-1][j-1] + 1 】
+
+```
+
+
 **推导和实现**：
-  ```js
-    var minDistance = function (word1, word2) {
+```js
+var minDistance = function (word1, word2) {
+    const dp = new Array(word1.length + 1).fill(0).map(_ => new Array(word2.length + 1).fill(Infinity))
 
-        // dp[i][j] 把 word1 的 [0,i) 部分 变为 word2 [0,j) 部分所需要的最少操作
-        // dp[0][0] 把空字符串变为空字符串无需任何操作
-        // dp[i][0] == i, 要删除 i 次 ， dp[0][j] == j 插入j 次
-        // 三条路，插入，删除，替换 ?
-        // 如果 word1[i] == word2[j] --> 那dp[i][j] = dp[i-1][j-1] 啥也不用做
-        // 如果不等
-        // 替换为等的那个： dp[i][j] = dp[i-1][j-1] + 1
-        // 插入为等的那个： dp[i][j] = dp[i-1][j] + 1
-        // 删除 :          dp[i][j] = dp[i][j-1] + 1 
+    for (let i = 0; i < word1.length + 1; i++) {
+        dp[i][0] = i // 删除 i 次
+    }
+    for (let j = 0; j < word2.length + 1; j++) {
+        dp[0][j] = j // 插入 j 次
+    }
 
-        const dp = new Array(word1.length + 1).fill(0).map(_ => new Array(word2.length + 1).fill(Infinity))
-        for (let i = 0; i < word1.length + 1; i++) {
-            dp[i][0] = i //变为空字符串最少操作是 删除 i 次
-        }
-        for (let j = 0; j < word2.length + 1; j++) {
-            dp[0][j] = j // 把空字符串变成 j 个指定字符 最少操作是 插入 j 次
-        }
+    for (let i = 1; i < word1.length + 1; i++) {
+        for (let j = 1; j < word2.length + 1; j++) {
 
-        for (let i = 1; i < word1.length + 1; i++) {
-
-            for (let j = 1; j < word2.length + 1; j++) {
-
-                if (word1[i - 1] === word2[j - 1]) {
-                    dp[i][j] = dp[i - 1][j - 1]
-                } else {
-                    dp[i][j] = Math.min(
-                        dp[i - 1][j],
-                        dp[i - 1][j - 1],
-                        dp[i][j - 1]
-                    ) + 1
-                }
+            if (word1[i - 1] === word2[j - 1]) {
+                dp[i][j] = dp[i - 1][j - 1]
+            } else {
+                dp[i][j] = Math.min(dp[i][j - 1], dp[i - 1][j], dp[i - 1][j - 1]) + 1
             }
         }
+    }
 
-        return dp[word1.length][word2.length]
-    };
-    ```
+    return dp[word1.length][word2.length]
+};
+```
 
 
 ## 最长有效括号
