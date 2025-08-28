@@ -253,3 +253,25 @@ var restoreIpAddresses = function (s) {
 	return res
 }
 ```
+
+
+## 39. 组合总和
+![](../assets/Pasted%20image%2020250818204520.png)
+数字可以用多次，去重问题。
+
+解决 223 和 232 的问题即可
+- 每次给一个startId
+- for i in range (startId, len)  
+	- backTrack(i)  // 不是 i + 1哈，因为数字可以重复用
+
+
+### 40. 组合总和 2
+![](../assets/Pasted%20image%2020250824134944.png)
+比较恶心的是 `[1,2,5]` 和 `[2,1,5]` 被视为同一个，需要去重。
+
+去重：通过给 candidates 排序，在 for 的时候滑动即可。
+
+这里小结一下回溯里面几种控制流：
+- 排序 + for 滑动
+- `visited` 访问标记
+- `startId` 控制方向

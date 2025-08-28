@@ -1,11 +1,10 @@
 ---
-title: 'SPA单页面应用的实现(hash和history)'
+title: SPA的实现(hash和history)
 date: 2025-06-27
 tags:
   - 前端框架
-
 ---
-
+# SPA的实现(hash和history)
 ## 1. 认识 SPA
 
 **SPA**

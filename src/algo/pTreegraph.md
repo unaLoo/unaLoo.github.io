@@ -157,7 +157,7 @@ var postorderTraversal = function (root) {
 ### 判断是否是对称二叉树
   - 关键是'对称'
     - 一个无左右孩子的节点 是对称的
-    - 有左右孩子 且 左子树的内侧和右子树的内侧一致 且 左子树的外侧和右子树的外侧一致 是对称的
+    - 有左右孩子 且 **左子树的内侧**和**右子树的内侧**一致 且 左子树的外侧和右子树的外侧一致 是对称的
    
 ---
 
@@ -401,7 +401,7 @@ function dfs(node, targetSum){
     // 处理当前节点
     path.push(node.val)
     targetSum -= node.val
-
+	// 此时才考虑收录
     if(!node.left && !node.right && targetSum == 0){
         res.push(path.slice()) // 必须slice或者[...path]，否则是浅拷贝会有问题
     }
@@ -491,5 +491,5 @@ function dfs(node, targetSum){
 
 ### 662. 二叉树的最大宽度
 - 描述：给定一个二叉树，求其一层中，最左和最右节点之间的距离（以完全二叉树计算距离）
-- 实现：层序遍历，给每个节点多加个id属性，id为节点在完全二叉树中的编号，然后维护一个maxWidth，每次遍历到新层时，计算当前层的最左和最右节点的id差值，更新maxWidth
+- 实现：层序遍历，**给每个节点多加个id属性**，id为节点在完全二叉树中的编号，然后维护一个maxWidth，每次遍历到新层时，计算当前层的最左和最右节点的id差值，更新maxWidth
 - 注意：数字会溢出，所以在给下一层编号时，应该 curId = curId - levelStartId, 然后左右节点再在curId的基础上 `* 2 + 1 `， `* 2 + 2 `

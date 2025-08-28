@@ -2,10 +2,9 @@
 title: 异步编程：Promise 核心理念
 date: 2025-07-11
 tags:
-  - Promise
+  - 异步编程
 ---
-
-> 异步编程
+# 异步编程：Promise 核心理念
 
 ## 异步编程
 

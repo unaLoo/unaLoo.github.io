@@ -177,3 +177,34 @@ var getIntersectionNode = function (headA, headB) {
     }
     return curA
 ```
+
+
+## 148. 排序链表
+
+这题 `O (n²)` 会超时，采用归并排序实现。
+- 注意：findMid 的时候返回 mid 的前一个，因为后面要从这个结点断开
+- 注意：合并俩有序链表肯定是尾插法！不要头插法用上头了！
+- 注意：归并排序的整体代码结构
+
+```js
+
+function findMid(head){
+	// ...
+	找中间结点用于分割，注意返回 prev ！
+}
+function merge(head1, head2){
+	// ...
+	合并两个有序链表，尾插法
+}
+function mergeSort(head){
+	// 递归终止条件
+	if(){}
+	// 分割
+	const mid = findMid()
+	const left = head
+	const right = mid.next
+	mid.next = null
+
+	return merge(mergeSort(left),mergeSort(right))
+}
+```

@@ -1,8 +1,8 @@
 ---
-title: '从原生CSS到现代CSS解决方案'
+title: 从原生CSS到现代CSS解决方案
 date: 2025-05-03
 tags:
-  - HTML&CSS
+  - CSS
 ---
 > 介绍了原生 CSS 的局限性，CSS 预处理器、后处理器、CSS-in-JS、原子化 CSS 等现代 CSS 解决方案的特点和适用场景。# 从 **Vanilla CSS** 到 **现代 CSS 解决方案**
 

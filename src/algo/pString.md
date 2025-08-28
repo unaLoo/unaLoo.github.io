@@ -82,11 +82,11 @@ function strStr(ogStr, subStr) {
 - 实现：
   - 中心扩散法：
     - 遍历中心i，再以i为中心向两侧扩散，维护最大值
-    - 注意：中心点可能是单个字符，也可能是两个字符，考虑两种情况，从[i,i]开始扩散AND从[i,i+1]开始扩散
+    - 注意：中心点可能是单个字符，也可能是两个字符，考虑两种情况，从`[i,i]`开始扩散AND从`[i,i+1]`开始扩散
   - 动态规划法：
-    - dp[i][j]表示[i,j]是否是回文串,故这个二维数组只有**右上角**的值是有效的，初始化只处理dp[i][i]
-    - dp[i][j]依赖于dp[i+1][j-1]，所以**i从大到小**遍历，**j从`i+1`到大**遍历
-    - 只有当`j>i+1`时，才需要判断dp[i][j]，否则dp[i][j] = dp[i] === dp[j]
+    - `dp[i][j]`表示`[i,j]`是否是回文串,故这个二维数组只有**右上角**的值是有效的，初始化只处理`dp[i][i]`
+    - `dp[i][j]`依赖于`dp[i+1][j-1]`，所以**i从大到小**遍历，**j从`i+1`到大**遍历
+    - 只有当`j>i+1`时，才需要判断`dp[i][j]`，否则`dp[i][j] = dp[i] === dp[j]`
 
 
 ## 3. 无重复字符的最长子串
@@ -189,38 +189,33 @@ function strStr(ogStr, subStr) {
 ## 43. 字符串相乘
 - 描述：给定两个用字符串表示的非负整数，求它们的乘积
 - 思路：[乘法的剖解](https://leetcode.cn/problems/multiply-strings/solutions/188815/gao-pin-mian-shi-xi-lie-zi-fu-chuan-cheng-fa-by-la/)
-  - ![乘法剖解](../assets/043. png)
+- ![](../assets/Pasted%20image%2020250815200532.png)
   - resArr的初始大小为`num1. length + num2. length`，因为两个数相乘，结果最多为两个数的长度之和
   - 处理i和j时，恰好对应resArr的`i+j`和`i+j+1`,主要是`i+j+1`低位加和
   - 最后把resArr转换为字符串，并去除前导0
-  ```js
+```js
   var multiply = function (num1, num2) {
-
-      if (num1[0] == 0 || num2[0] == 0) return '0'
-
-      const size = num1. length + num2. length
-      const resArr = new Array(size).fill(0)
-
-      for (let i = num1. length - 1; i >= 0; i--) {
-
-          for (let j = num2. length - 1; j >= 0; j--) {
-
-              let multi = Number(num1[i]) * Number(num2[j])
-              if (resArr.length > 1) {
-                  let sum = multi + resArr[i + j + 1]
-                  resArr[i + j + 1] = sum % 10
-                  resArr[i + j] += Math.floor(sum / 10)
-              }
-
-          }
-      }
-
-      let start = 0
-      while (start < resArr.length && resArr[start] === 0) start++
-
-      return resArr.slice(start).join('')
+	  if (num1[0] == 0 || num2[0] == 0) return '0'
+	  const size = num1. length + num2. length
+	  const resArr = new Array(size).fill(0)
+	  
+	  for (let i = num1. length - 1; i >= 0; i--) {
+		  for (let j = num2. length - 1; j >= 0; j--) {
+	
+			  let multi = Number(num1[i]) * Number(num2[j])
+			  if (resArr.length > 1) {
+				  let sum = multi + resArr[i + j + 1] // 加上原来的值
+				  resArr[i + j + 1] = sum % 10 // 新的该位
+				  resArr[i + j] += Math.floor(sum / 10) // 进位
+			  }
+		  }
+	  }
+	
+	  let start = 0
+	  while (start < resArr.length && resArr[start] === 0) start++
+	  return resArr.slice(start).join('')
   };
-  ```
+```
 
 ## 28. 找出字符串中第一个匹配项的下标
 - 描述：KMP，但是直接用`indexOf`就能解决
@@ -246,3 +241,88 @@ function strStr(ogStr, subStr) {
         cur.isEnd = true
     };
   ```
+
+## 8. 字符串转换整数 (atoi)
+
+这题题目把算法都讲出来了，先跳过前导空格，然后取正负号（没有则为正号），然后再把字符转为数字，途中一旦遇到非数字就退出。
+
+不需要想太多，平铺直叙地面向过程地写就好，注意溢出的判断。
+```js
+let sign = 1
+// 1. Skip space
+while(s[i] == ' ') i++ 
+// 2. Get sign
+if(s[i] == '+' || s[i]=='-'){
+	sign = s[i] === '-' ? -1 : 1
+}
+// 3. Str to num
+while(i < len-1 && isDigit(s[i])){
+	let digit = s[i] - '0' // 这个很巧哇
+	ans = ans * 10 + digit
+}
+// 4. limit range 
+clamp(ans, -2^32, 2^32 -1)
+```
+
+## 76. 最小覆盖子串
+![](../assets/Pasted%20image%2020250816151217.png)
+子串问题，可以考虑可变大小的滑动窗口，通过双指针实现，先向右扩张找到符合条件的子串，再缩小窗口找到最优窗口。
+
+这题复杂在，设计怎么样的数据结构来判断当前是否符合条件？
+- 注意 t 中是会有重复字符的，所以应该是 Map，记录 key 及其数量
+- 其他字符不用管，我们只关心当前子串是否出现目标字符
+
+采用两个哈希表，一个是目标，一个是当下
+
+```js
+const ogMap = new Map() // 目标
+const curMap = new Map() // 当下
+
+// 辅助函数
+const addone = (map, key) => {
+	//给 map 的 key 加一或初始化为 1
+}
+const valid = () => {
+	// 遍历目标 Map 取出目标字符和数量, 检查当前 Map 中是否满足条件
+	return bool
+}
+
+// 初始化目标哈希表
+for (const c of t) {
+	addone(ogMap, c) 
+}
+
+// 滑动窗口的同时维护 curMap
+let l = 0, r = 0
+let windowSize = Infinity, ansL = -1, ansR = -1
+while (r < s.length) {
+
+	// 我们只关心目标字符是否出现
+	const char = s[r]
+	if (ogMap.has(char)) {
+		addone(curMap, char)
+	}
+
+	// 尝试缩小窗口
+	while (l <= r && valid()) {
+		// 当有更小的窗口时就更新答案
+		const curSize = r - l + 1
+		if (curSize < windowSize) {
+			ansL = l
+			ansR = r
+			windowSize = curSize
+		}
+		// 缩小窗口同时维护 curMap，同样的，我们只关心目标字符
+		const leftChar = s[l]
+		if (curMap.has(leftChar)) {
+			curMap.set(leftChar, curMap.get(leftChar) - 1)
+		}
+		l++
+	}
+	r++
+}
+// return ans
+```
+
+## 14. 最长公共前缀
+

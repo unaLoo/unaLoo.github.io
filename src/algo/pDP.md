@@ -142,6 +142,48 @@ for (let i = 2; i < n + 1; i++) {
 - **否则只考虑卖**，尽可能高价卖，`maxProfit = Math.max(maxProfit, price - lowestPrice)`
 
 
+## 买卖股票的最佳时机 ②
+
+**题目**： 与上题同样只能同时持有一支股票，但是能多次操作。
+
+### DP 思路
+
+- 能多次操作，那么每天就有两种状态，持有股票或无股票
+- 今天持有可能是之前买入的继续持有，也可能是今天买入的
+- 今天无股票可能是之前就一直空仓 ，也可能是今天卖了
+
+```js
+// dp[n][2] --> dp[i][0] 表示第 i 天无股，dp[i][1]表示第 i 天持股
+dp[i][0] = Math.max(
+	dp[i - 1][1] + prices[i], // 在 i 天卖出
+	dp[i - 1][0] // 在 i 天无操作，继续空仓
+)
+
+dp[i][1] = Math.max(
+	dp[i - 1][0] - prices[i], // 在 i 天买入 
+	dp[i - 1][1] // 在 i 天误操作，继续持有
+)
+```
+
+优化：
+基于上面的推导可以看到，基本只依赖前一天的状态，所以dp数组完全可以退化为用一个状态量来保持。 
+
+### 贪心思路
+
+有钱就赚
+
+```js
+var maxProfit = function(prices) {
+    let ans = 0;
+    let n = prices.length;
+    for (let i = 1; i < n; ++i) {
+        ans += Math.max(0, prices[i] - prices[i - 1]);
+    }
+    return ans;
+};
+```
+
+
 ## 零钱兑换
 
  **题目**：给定一个数组`coins` 表示硬币面值，求组成总金额 `amount` 的最少硬币数目
@@ -250,6 +292,7 @@ for( j < i ){
  **踩坑**
 - 注意初始化的时候 不要写错
 - `const dp = new Array(grid.length).fill(0).map(_ => new Array(grid[0].length).fill(Infinity))`
+- 踩坑：使用回溯一直超时！！
 
 ## 最大子数组和
 **题目**：给你一个整数数组 `nums` ，找出一个具有最大和的连续子数组，返回其最大和。
@@ -417,4 +460,63 @@ var longestValidParentheses = function (s) {
     }
     return ans;
 };
+```
+
+
+## 单词拆分
+![](../assets/Pasted%20image%2020250823135908.png)
+这题我一开始用回溯
+```txt
+从 i 开始
+for j in range [i, len-1]
+	sub = s.slice(i,j+1)
+	if(dict.has(sub)){
+		// 能找到匹配的单词的话，就继续从j+1往下go
+		let oldCurStr = curStr
+		curStr = oldCurStr + sub 
+		backTrack(j + 1)
+		curStr = oldCurStr // 回溯，因为会有sand, and, cat, cats这些情况
+	}
+```
+逻辑上是没毛病的，但是超时了。
+
+改为DP 
+```txt
+dp[i]: 前 i 个字符能否被凑成，我们的目标变成了求 dp[n]
+dp[0] = 0
+dp[i] = for j in [0, i] {  dp[j] && dict.has(s.slice(j,i))  } 
+
+有点零钱兑换那意思
+```
+
+
+## 5. 最长回文子串
+- 描述：给定一个字符串，求其中的最长回文子串
+- 注意：这题是子串问题，要保持原顺序，找到原始串中满足条件的一个子串
+- 思路：
+  - 动态规划法，`dp[i][j]`表示`[i,j]`是否是回文串，存个 boolean 即可，`dp[i][j] = dp[i+1][j-1] && s[i] === s[j]`，维护最大值
+
+- 实现：
+    - `dp[i][j]`表示`[i,j]`是否是回文串,故这个二维数组只有**右上部分**的值是有效的，初始化只处理`dp[i][i]`
+    - `dp[i][j]`依赖于`dp[i+1][j-1]`，所以**i从大到小**遍历，**j从`i+1`到大**遍历
+    - 只有当`j>i+1`时，才需要判断`dp[i][j]`，否则`dp[i][j] = dp[i] === dp[j]`
+
+还有一个中心探测法，更高效，遍历每个元素作为中心，从中心往左右双指针探测。
+
+### 516. 最长回文子序列
+子序列：是可以jump的，保留相对顺序即可。
+![](../assets/Pasted%20image%2020250824130906.png)
+同样的，核心是 **回文串去除首尾仍然是回文串**
+`dp[i][j] = dp[i + 1][j - 1] + 2`
+
+```txt
+含义： dp[i][j]: s[i,j]这部分的最长回文子序列
+初始化：只有 j >= i 的部分有意义，dp[i][i] = 1
+遍历：i依赖于i+1,所以从大到小，j依赖于j-1，所以从小到大
+递推：
+i==j --> dp[i][j] = 1
+j==i+1 --> if si = sj : dp[i][j] = 2
+		   else :       dp[i][j] = 1
+j> i+1 --> if si = sj : dp[i][j] = dp[i + 1][j - 1] + 2
+		   else :  dp[i][j] = max(dp[i+1][j],dp[i][j-1])
 ```

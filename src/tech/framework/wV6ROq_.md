@@ -1,13 +1,10 @@
 ---
-title: 'Vue3 为什么用Proxy重构'
+title: Proxy 与响应式
 date: 2025-06-27
 tags:
   - 前端框架
-
 ---
-
-> Vue3 为什么用Proxy重构
-
+# Proxy 与响应式
 ## 1. Proxy
 
 ### 1. 1 Proxy 的颠覆性
@@ -16,6 +13,7 @@ tags:
 Proxy 是对象的代理，可以代理对象的属性、方法、甚至整个对象，这不是一个level的。
 
 Proxy的handle里提供了一堆拦截方法(trap)，可以拦截对象的所有操作。
+
 | 方法 | 描述 |
 | --- | --- |
 | get | 拦截对象的属性读取 |
@@ -24,7 +22,6 @@ Proxy的handle里提供了一堆拦截方法(trap)，可以拦截对象的所有
 | deleteProperty | 拦截对象的delete操作符 |
 | apply | 拦截对象的函数调用 |
 | construct | 拦截对象的new操作符 |
-
 
 Proxy可以做校验器、可以做私有属性...
 
@@ -110,9 +107,9 @@ vue2采用的解决方案是：**hack数组的7个方法**, 调用基本方法�
   })
 ```
 
-    
+
 TS是在 JavaScript 上增加一套静态类型系统（**编译时(开发时)**进行类型分析）
-    
+
 在JS的基本类型和引用类型上，增加了一套类型系统
 - JS的基本类型+引用类型 `number | string | boolean | null | undefined | object | symbol`
 - enum 类型 `enum LogLevel { info = 'info', warn = 'warn', error = 'error' }`
@@ -130,9 +127,3 @@ TS是在 JavaScript 上增加一套静态类型系统（**编译时(开发时)**
 - 交叉类型 `A & B` 对象属性多合一
 - 联合类型 `A | B` 类型多合一
 - 类型断言 `a as string`
-
-
-
-
-## 参考资料
-- [vue3-one-piece](https://vue3js.cn/){target="_blank" rel="noreferrer"}

@@ -9,6 +9,13 @@ tags:
 ## 704 二分查找 
 从始至终遵循同一个数组边界定义，左闭右开 | 左闭右闭
 
+## 69. X 的平方根
+
+题目只要求整数精度，问题演化为找到一个最大 `ans` 使得 `ans * ans < X` 且 `(ans + 1) * (ans + 1) > X`  
+
+- 初始化边界为 `[0, x]`
+- 不断二分迭代，找到 ans
+
 
 ## 27 移除元素 
 **关键点**
@@ -406,3 +413,194 @@ while (i >= 0 || j >= 0) {
 实现：
 - 构造一个`leftMax`和`rightMax`数组，省得每次都遍历找。
 - 用上面的公式即可求解
+
+
+## 22. 括号生成
+
+![](../assets/Pasted%20image%2020250813172912.png)
+方法一：回溯产生所有可能的组合 + 遍历 valid 判断
+
+```js
+// 可能的组合
+let leftNum = n, rightNum = n
+let possible = []
+let cur = []
+function genPossible(startId) {
+	if (startId === 2 * n) {
+		possible.push(cur.join(''))
+		return
+	}
+	if (leftNum > 0) {
+		cur.push('(')
+		leftNum--
+		genPossible(startId + 1)
+		// 回溯
+		leftNum++
+		cur.pop()
+	}
+	if (rightNum > 0) {
+		cur.push(')')
+		rightNum--
+		genPossible(startId + 1)
+		// 回溯
+		rightNum++
+		cur.pop()
+	}
+}
+genPossible(0)
+```
+
+方法二：一次回溯，在回溯过程中考虑**有效的括号**,核心是：只有当前路径中，左括号数目比右括号数目多，才应该插入右括号，等于都不行！必须大于！
+```js
+let leftNum = n, rightNum = n // 可用的左括号数量和右括号数量
+function backTrack(startID) {
+	if (startID === 2 * n) {
+		ans.push(cur.join(''))
+		return
+	}
+
+	if (leftNum > 0) { // 左括号只要有就能放
+		leftNum--
+		cur.push('(')
+		backTrack(startID + 1)
+		cur.pop()
+		leftNum++
+	}
+
+	if (rightNum > 0 && rightNum > leftNum) { // 如果cur里边左括号多，即剩余的右括号更多，那么可以插入
+		rightNum--
+		cur.push(')')
+		backTrack(startID + 1)
+		cur.pop()
+		rightNum++
+	}
+}
+```
+
+
+## 31. 下一个排列
+
+求整数数组的下一个字典序稍微更大的排列，如果已经是最大，返回最小.
+
+```txt
+123 --> 132 --> 213 --> 231 --> 312 --> 321 --> 123
+
+123456 --> 123465 --> 123546 --> 123564 --> ...
+```
+
+究极找规律型题目，要让他字典序稍微更大一点，这里的整数数组可以看作一个整数，那就是稍大一点的整数。
+要稍大一点，那么肯定是尽可能从数字的低位（右边）操作好一些。
+
+直接给家人们上规律
+
+```txt
+1. 从右往左找第一个*相邻*升序 nums[i] < nums[j], i + 1 === j
+2. 如果找到了 i，j, 此时[j,end]必定是一个降序序列，在这个区间里边找到 nums[k](nums[i] 的最小的整数)
+3. 交换 nums[k] nums[j] 这俩最小的大数和最大的小数
+4. 使 [j,end] 升序排列
+
+---- 
+
+例子：求 123465 的下一个排列
+1. 找到相邻升序 4 < 6 
+2. 再在 6 及其之后的区间里找到最小的大数 5
+3. 交换,得到 123564
+4. 让 6 及其之后的区间升序排列，得到 123546
+```
+
+```js
+    if (nums.length <= 1) return
+
+    // 1.从后往前找升序的元素对
+    let i = nums.length - 2
+    let j = nums.length - 1
+    let k = nums.length - 1
+    while (i >= 0 && nums[i] >= nums[j]) {
+        i--
+        j--
+    }
+
+    // 2.在[j,end]这个降序区间，找尽可能小的大数
+    if (i >= 0) { // 不是最后一个排列
+        while (nums[i] >= nums[k]) {
+            k--
+        }
+        // 此时 nums[k] > nums[i], 一个是最小的大数，一个是最大的小数
+        [nums[k], nums[i]] = [nums[i], nums[k]]
+    }
+
+    // 3.使降序的[j,end] 升序
+    let L = j, R = nums.length - 1
+    while (L < R) {
+        [nums[R], nums[L]] = [nums[L], nums[R]]
+        R--
+        L++
+    }
+```
+
+## 162. 寻找峰值
+![](../assets/Pasted%20image%2020250821102403.png)
+找一个序列里的峰值，这个峰值元素比旁边俩大即可，不需要是最大值。
+
+思路：
+二分搜索法：利用局部上升或下降的趋势缩小查找范围。
+如果 `nums[mid] > nums[mid+1]`，这是一个局部下降的趋势，那么峰值肯定出现在 mid 本身或 mid 左边。
+如果`nums[mid] < nums[mid+1]`，一个上升趋势，那么峰值肯定出现在 mid + 1或者更靠后
+
+
+## 560. 和为 K 的子数组
+
+给你一个整数数组 `nums` 和一个整数 `k` ，请你统计并返回 该数组中和为 `k` 的子数组的个数 。子数组是数组中元素的连续非空序列。
+
+**思路：**
+最直观的：枚举子串 O n方，确定起点，然后遍历终点的同时**加和**判断
+
+优化：
+
+**首先是理解前缀和**
+```txt
+prefix[i] : 索引为0到i-1的这个子数组的元素的和。
+
+如果我们要求索引 i 到 j 的子数组的元素和，就可以用上它：
+sum<i,j> = prefix[j + 1] - prefix[i] // 即 sum<0,j> - sum<0,i-1>
+```
+回归题目, 我们要找和为 k 的子数组有多少个
+
+找 `k === prefix[j + 1] - prefix[i]` 的 ij 有多少种
+先遍历建 prefix
+然后再 for i , for j 找 ？？
+
+
+no, 那就又变成 n方了
+
+
+**记忆化**
+
+对于 `prefix[i]` 我想知道 `k - prefix[j + 1]` 有没有？如果能那个表记下来就好了。
+
+所以每次遇到 prefixSum 就记录下来，计数 + 1，这个表的key就是prefixSum，value是count
+
+所以：
+```js
+function solve(nums){
+
+	let map = new Map()
+	map.set(0, 1) // 初始化，处理从0开始的子数组，我们记录为0出现过一次
+
+	let res = 0
+	let cursum = 0
+	for(const num of nums){
+		cursum += num
+		// 注意这里
+		if(map.has(cursum - k)){
+	// 如果能找到 前缀和为 cursum -k 的，那俩序列一减就得到了一个目标子序列
+			res += map.get(k-cursum)
+		}
+		// 记录当前的
+		map.set(cursum, (map.get(cursum) || 0) + 1)
+	}
+}
+```
+
+为什么是 `cursum - k`
+设我们要找的前缀和是 P ，我们是从前往后处理的，P 应该是之前出现过的才构成合法子序列，所以有关系 `cursum - P = k` ，那么 `P = cursum - k`

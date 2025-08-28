@@ -1,9 +1,8 @@
 ---
-title: '浏览器中的 Reflow, Repaint '
+title: "浏览器中的 Reflow, Repaint "
 date: 2025-05-02
 tags:
-  - HTML&CSS
-
+  - HTML
 ---
 
 > Reflow和Repaint是影响Web应用性能的重要因素，他们是什么，如何避免？![浏览器页面呈现流程](../../assets/edgeshow.png)

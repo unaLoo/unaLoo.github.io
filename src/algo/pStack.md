@@ -253,3 +253,4 @@ function qSelect(arr, left, right, k) {
       - while `stack有元素` `栈顶元素字典序大于c` `栈顶元素出现次数大于0`，符合条件那就pop
       - 最后把c入栈
       - 最后把**c的次数减1**
+

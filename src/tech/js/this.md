@@ -5,8 +5,9 @@ tags:
   - JavaScript
 ---
 
-> this 是 JavaScript 中的一个关键字，它指向当前执行上下文中的对象，此外还有bind、call、apply方法可以改变this指向，本文将深入探讨 `this` 的指向规律、`bind` / `call` / `apply` 的原理与手写实现。
+# this
 
+> this 是 JavaScript 中的一个关键字，它指向当前执行上下文中的对象，此外还有bind、call、apply方法可以改变this指向，本文将深入探讨 `this` 的指向规律、`bind` / `call` / `apply` 的原理与手写实现。
 
 ## 一、this 的几种常见指向总结
 
