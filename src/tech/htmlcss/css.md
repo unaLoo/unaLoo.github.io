@@ -7,7 +7,6 @@ tags:
 > 介绍了原生 CSS 的局限性，CSS 预处理器、后处理器、CSS-in-JS、原子化 CSS 等现代 CSS 解决方案的特点和适用场景。# 从 **Vanilla CSS** 到 **现代 CSS 解决方案**
 
 
-
 ## 一、原生CSS开发的局限性
 
 > 在 Web 开发早期，Web页面更像是一张静态的海报，HTML 负责内容，CSS 负责样式。

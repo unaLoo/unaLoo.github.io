@@ -8,7 +8,6 @@ tags:
 
 > 登录这个东西，进组的时候都说学前后端，懂登录就可以干活🌶，实现登录倒是简单，安全登录就需要考虑很多了，这篇捋一捋Cookie、Session、SSO、LocalStorage、SessionStorage这些东西
 
-
 ## Intro
 
 客户端和服务器的认证问题:         

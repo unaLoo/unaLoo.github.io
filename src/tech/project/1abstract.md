@@ -5,11 +5,9 @@ tags:
   - 前端工程化
 
 ---
+# Webpack构建流程
 
-> webpack构建流程
-
-
-## Webpack构建流程概述
+## 概述
 
 Webpack 是一个模块打包工具，核心目标是把项目中的所有前端资源（JavaScript、CSS、图片、字体等）都视为**模块**。它会从一个或多个**入口文件 (Entry Points)** 开始，递归地构建一个**依赖图 (Dependency Graph)**，然后将图中的所有模块打包成浏览器可用的静态资源文件。
 
@@ -19,7 +17,7 @@ Webpack 是一个模块打包工具，核心目标是把项目中的所有前端
 2.  **构建模块 (Building Modules)**
 3.  **优化 (Optimization)**
 4.  **输出 (Output)**
-
+![](../../assets/Pasted%20image%2020250901103827.png)
 ## 构建流程
 
 ### 1. 初始化阶段 (Initialization)

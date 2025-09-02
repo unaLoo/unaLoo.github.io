@@ -1,9 +1,8 @@
 ---
-title: 'CommonJS 和 ES Module'
-date: 2025-06-23
+title: CommonJS 和 ES Module
+date: 2025-06-26
 tags:
   - 前端工程化
-
 ---
 
 > CommonJS 和 ES Module 是两种不同的模块化规范，它们在实现方式、使用场景和语法上都有所不同。

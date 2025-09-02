@@ -1,13 +1,10 @@
 ---
-title: 'Loader 与 Plugin'
-date: 2025-06-23
+title: Loader 与 Plugin
+date: 2025-06-25
 tags:
   - 前端工程化
-
 ---
-
-> Webpack 中的 Loader 与 Plugin，他们是什么，有什么区别，解决了什么问题 ?
-
+# Loader 与 Plugin
 
 ## 一、 Loader（加载器）
 
