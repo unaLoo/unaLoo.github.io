@@ -17,6 +17,9 @@ tags:
 3. 断开连接：四次挥手
 
 
+![](../../assets/Pasted%20image%2020250904134728.png)
+[可靠传输-TCP| 小林coding | Java面试学习](https://xiaolincoding.com/network/1_base/what_happen_url.html#%E5%8F%AF%E9%9D%A0%E4%BC%A0%E8%BE%93-tcp)
+
 ### 1. 建立连接
 
 连接的本质就是双方各自开辟一个Buffer，用于存储数据。

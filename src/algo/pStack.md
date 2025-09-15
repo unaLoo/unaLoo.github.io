@@ -197,6 +197,12 @@ function qSelect(arr, left, right, k) {
       stack.push(item)
     }
   }
+// 1，6，5，2，3
+// 1
+// 1 6
+// 1 5
+// 1 2
+// 1 2 3
 ```
 
 

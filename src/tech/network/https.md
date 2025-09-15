@@ -8,8 +8,6 @@ tags:
 
 > HTTPS (Hypertext Transfer Protocol Secure) 是在 HTTP 协议的基础上，增加了 SSL/TLS 协议进行加密，以提供安全性的网络通信协议。
 
-
-
 ## 什么是 HTTPS？
 
 **HTTPS (Hypertext Transfer Protocol Secure)** 是在 **HTTP** 协议的基础上，增加了 **SSL/TLS (Secure Sockets Layer / Transport Layer Security)** 协议进行加密，以提供**安全性**的网络通信协议。简单来说，HTTPS = HTTP + SSL/TLS。
