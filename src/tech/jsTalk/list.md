@@ -337,7 +337,7 @@ observer.observe(sentinel)
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>虚拟列表DEMO</title>
     <style>
         body {
             padding: 0;
@@ -365,15 +365,12 @@ observer.observe(sentinel)
             margin-left: 50px;
         }
 
-        #list :nth-child(n) {
-            background-color: rgb(57, 57, 57);
-            color: rgb(214, 214, 214);
-        }
 
         .item {
             width: 370px;
             height: 50px;
-            /* box-shadow: inset gainsboro 1px 1px 4px 0px; */
+            box-shadow: inset gainsboro 1px 1px 4px 0px;
+	        background-color: rgb(244, 252, 255);
             text-align: center;
             line-height: 50px;
         }
@@ -475,3 +472,215 @@ observer.observe(sentinel)
 
 </html>
 ```
+
+最终效果如下：
+
+![](../../assets/屏幕录制%202025-10-07%20151531.mp4)
+
+
+---
+
+在上面的实现中，我们默认每个条目都是50px，在css和js中都写死为 50了，但是真实应用中，列表中的每一项并非大小完全一致，就比如，表格中有一行文字太多换行了，那么上面的办法就不行了。
+
+说到这，针对不定长的虚拟列表问题，我们也是有方案的。
+
+**核心思想：**
+- 因为每一项高度不一致，需要维护一个高度数组获取每一项的高度。
+	- 设置列表项的 height 为 fit-content，自然就是由内容撑起高度
+	- 如何获取高度呢，用 resizeObserver 去观察几个列表项目DOM，当高度变化时，我们就填入高度数组。
+	
+- startID 和 endID 的计算？
+	- startID应该是视窗内的第一个元素，我们就从 0 累加 itemHeights 数组，到sumHeight 大于 scrollTop 的前一个索引就是我们要的 startID
+	- endID 就随意了，尽可能多就行，startID + renderCount 就OK
+
+- 小麻烦，如何把数组中的索引对应到 itemDom 上？
+	- 这里我采用的方案是在 DOM 的 dataset 里加一个 idx 属性，在滚动时动态填入，在观察回调时拿到的就是最新的。
+
+- 优化：
+	- 采用前缀和数组，`prefixSum[i]` 表示数组 itemHeights 前 i 项的和，这样省的每次都累加计算
+	- 有了前缀和数组，找 startID，就可以基于 scrollTOP，在前缀和数组里二分查找，进一步优化。
+
+
+下面给出我的完整实现：
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>不定长虚拟列表DEMO</title>
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgb(57, 57, 57);
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            position: relative;
+            width: 500px;
+            height: 700px;
+            background-color: whitesmoke;
+            overflow-y: auto;
+        }
+
+        #list {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            margin-left: 50px;
+        }
+
+        .item {
+            width: 370px;
+            background-color: #fff7ef;
+            margin-bottom: 4px;
+            box-shadow: inset 0 0 4px rgb(247, 120, 1);
+            line-height: 1.5;
+            text-align: center;
+        }
+
+        #spacer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgb(255, 227, 227);
+            z-index: -1;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div id="spacer"></div>
+        <div id="list"></div>
+    </div>
+
+    <script>
+        ///////////// Data /////////////
+        function fetchData() {
+            return new Array(1000).fill(0).map((_, i) => {
+                const rand = Math.round(Math.random() * 9)
+                return {
+                    id: i,
+                    title: `这是第 ${i} 条数据 `.repeat(rand + 1)
+                }
+            })
+        }
+
+        const data = fetchData()
+        const itemCount = data.length
+
+        const container = document.querySelector('.container')
+        const spacer = document.querySelector('#spacer')
+        const listDom = document.querySelector('#list')
+
+        /////// Initial //////////////////////////////////
+        const estimatedHeight = 50 // 预估高度
+        const itemHeights = new Array(itemCount).fill(estimatedHeight)
+        let prefixHeights = [] // 前缀和数组
+
+        function updatePrefixHeights() {
+            prefixHeights = new Array(itemCount)
+            let sum = 0
+            for (let i = 0; i < itemCount; i++) {
+                sum += itemHeights[i]
+                prefixHeights[i] = sum
+            }
+            spacer.style.height = sum + 'px'
+        }
+        updatePrefixHeights()
+
+        ///////////// 初始化相关DOM /////////////
+        const visibleCount = Math.ceil(container.clientHeight / estimatedHeight)
+        const overscan = 3 // buffer
+        const renderCount = visibleCount + overscan * 2 // 上下 buffer
+
+        const frag = document.createDocumentFragment()
+        for (let i = 0; i < renderCount; i++) {
+            const div = document.createElement('div')
+            div.classList.add('item')
+            frag.appendChild(div)
+        }
+        listDom.appendChild(frag)
+        const domList = Array.from(listDom.children)
+
+        ///////////// 监听每个元素高度变化 /////////////
+        const resizeObs = new ResizeObserver(entries => {
+            for (const entry of entries) {
+                // 用 dataset-idx 来拿到索引
+                const idx = Number(entry.target.dataset.idx)
+                const newHeight = entry.contentRect.height
+                if (itemHeights[idx] !== newHeight) {
+                    itemHeights[idx] = newHeight
+                    updatePrefixHeights()
+                }
+            }
+        })
+        domList.forEach(el => resizeObs.observe(el))
+
+        ///////////// 基于 scrollTop 查找 startID /////////////
+        function findStartIndex(scrollTop) {
+            // 因为有了前缀和数组，所以直接二分查找
+            let low = 0, high = prefixHeights.length - 1, mid
+            while (low <= high) {
+                mid = (low + high) >> 1
+                if (prefixHeights[mid] < scrollTop) low = mid + 1
+                else high = mid - 1
+            }
+            return low
+        }
+
+        ///////////// 渲染函数 /////////////
+        function render() {
+            // 计算 startID，endID
+            const scrollTop = container.scrollTop
+            const startID = Math.max(0, findStartIndex(scrollTop) - overscan)
+            let endID = Math.min(itemCount, startID + renderCount)
+
+            // 新数据更新DOM
+            const visibleItems = data.slice(startID, endID)
+            visibleItems.forEach((item, i) => {
+                const el = domList[i]
+                el.textContent = item.title
+                el.style.display = 'block'
+                el.dataset.idx = startID + i // 用dataset.idx记录索引
+            })
+
+            // DOM的偏移量应该是*之前*的所有items的和
+            const offsetY = startID > 0 ? prefixHeights[startID - 1] : 0
+            listDom.style.transform = `translateY(${offsetY}px)`
+        }
+
+        ///////////// 滚动绑定 + 初始渲染 /////////////
+        let pending = false
+        container.addEventListener('scroll', () => {
+            if (!pending) {
+                requestAnimationFrame(() => {
+                    render()
+                    pending = false
+                })
+                pending = true
+            }
+        })
+
+        render()
+    </script>
+</body>
+
+</html>
+```
+
+效果如下：
+
+![](../../assets/屏幕录制%202025-10-07%20162734.mp4)
